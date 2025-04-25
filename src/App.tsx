@@ -1,13 +1,18 @@
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import './App.css'
+import { AuthProvider } from './context/AuthContext'
+import Login from './pages/Login'
 
 function App() {
   return (
     <>
-
-      <section className="bg-blue-500 text-white p-4">
-        <h1 className="text-2xl font-bold">Configurações inicias</h1>
-        <p className="text-lg">Olá Mundo!</p>
-      </section>
+      <AuthProvider>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Login />} />
+          </Routes>
+        </BrowserRouter>
+      </AuthProvider>
     </>
   )
 }
