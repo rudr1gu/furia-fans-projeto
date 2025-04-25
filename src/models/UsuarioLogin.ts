@@ -3,8 +3,8 @@ interface UsuarioLogin {
     nome: string;
     email: string;
     senha: string;
-    foto?: Date;
-    tipo?: Date;
+    foto?: string;
+    tipo?: string;
     token: string;
 }
 

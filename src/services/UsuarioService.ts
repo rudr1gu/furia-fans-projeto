@@ -13,7 +13,7 @@ class UsuarioService {
         setDados(response.data);
     }
 
-    loginUsuario = async(usuario: Usuario, setDados: Function) => {
+    loginUsuario = async(usuario: Object, setDados: Function) => {
         const response = await baseApi.post<Usuario>('/usuarios/logar', usuario);
         setDados(response.data);
     }
