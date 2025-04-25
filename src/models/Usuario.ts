@@ -12,11 +12,11 @@ interface Usuario {
     tipo: string;
     avatar?: string;
     dataCriacao?: Date;
-    postagens: Postagem[];
-    respostas: Resposta[];
-    redeSociais: RedeSocial[];
-    nivel: Nivel;
-    jogos: Jogo[];
+    postagens?: Postagem[];
+    respostas?: Resposta[];
+    redeSociais?: RedeSocial[];
+    nivel?: Nivel;
+    jogos?: Jogo[];
 }
 
 export default Usuario;

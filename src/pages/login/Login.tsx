@@ -34,14 +34,14 @@ const Login = () => {
             <div>
                 <label className="block text-sm">Email</label>
                 <input
-                id="usuario"
-                type="email"
-                name="email"
-                placeholder="seu@email.com"
-                className="mt-1 block w-full px-3 py-2 bg-white border border-slate-300 rounded-md text-sm shadow-sm focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500"
-                value={usuarioLogin.email}
-                onChange={(e) => atualizarEstado(e)}
-                required
+                    id="usuario"
+                    type="email"
+                    name="email"
+                    placeholder="seu@email.com"
+                    className="mt-1 block w-full px-3 py-2 bg-white border border-slate-300 rounded-md text-sm shadow-sm focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500"
+                    value={usuarioLogin.email}
+                    onChange={(e) => atualizarEstado(e)}
+                    required
                 />
             </div>
             <div>
