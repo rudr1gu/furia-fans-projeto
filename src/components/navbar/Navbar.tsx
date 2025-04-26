@@ -23,7 +23,7 @@ const Navbar: React.FC = () => {
                             <Logo size={40} />
                         </div>
                         <div className="hidden md:block">
-                            <div className="ml-10 flex items-center space-x-4">
+                            <div className="ml-10 flex items-center justify-between space-x-4">
                                 <NavLink href="/" icon={<Home size={18} />}>
                                     Inicio
                                 </NavLink>
