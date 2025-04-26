@@ -8,8 +8,8 @@ class UsuarioService {
         setDados(response.data);
     }
 
-    getAllUsuarios = async(setDados: Function) => {
-        const response = await baseApi.get<Usuario[]>('/usuarios/all');
+    getAllUsuarios = async(setDados: Function, header: Object) => {
+        const response = await baseApi.get<Usuario[]>('/usuarios/all', header);
         setDados(response.data);
     }
 
@@ -18,13 +18,13 @@ class UsuarioService {
         setDados(response.data);
     }
 
-    getByIdUsuario = async(id: number, setDados: Function) => {
-        const response = await baseApi.get<Usuario>(`/usuarios/${id}`);
+    getByIdUsuario = async(id: number, setDados: Function, header: Object) => {
+        const response = await baseApi.get<Usuario>(`/usuarios/${id}`, header);
         setDados(response.data);
     }
 
-    updateUsuario = async(usuario: Usuario, setDados: Function) => {
-        const response = await baseApi.put<Usuario>(`/usuarios/atualizar`, usuario);
+    updateUsuario = async(usuario: Usuario, setDados: Function, header: Object) => {
+        const response = await baseApi.put<Usuario>(`/usuarios/atualizar`, usuario , header);
         setDados(response.data);
     }
     

@@ -4,46 +4,57 @@ import Usuario from '../../models/Usuario';
 
 
 interface FanCardProps {
-  fan: Usuario;
+    fan: Usuario;
 }
 
 const FanCard: React.FC<FanCardProps> = ({ fan }) => {
-  return (
-    <div className="bg-white dark:bg-zinc-800 rounded-lg shadow-md overflow-hidden transition-transform duration-300 hover:scale-[1.02]">
-      <div className="bg-gradient-to-r from-zinc-800 to-black p-4">
-        <div className="flex items-center space-x-4">
-          <img
-            src={fan.avatar}
-            alt={fan.nickName}
-            className="w-16 h-16 rounded-full border-2 border-white object-cover"
-          />
-          <div>
-            <h3 className="text-xl font-bold text-white">{fan.nickName}</h3>
-            <div className="flex mt-2 space-x-2">
-                <div>
-                    <h1> rede sociais</h1>
+    return (
+        <div className="flex flex-col items-center justify-center py-5">
+            <div className="relative bg-white dark:bg-zinc-900 shadow-lg rounded-lg border dark:border-zinc-900 w-80 pt-16 pb-5 px-6 text-center">
+                <div className="absolute top-[-60px] left-1/2 transform -translate-x-1/2">
+                    <img
+                        className="w-[130px] h-[130px] rounded-full shadow-sm border-4 border-zinc-100 dark:border-zinc-900 transition-transform duration-300 hover:scale-95"
+                        src={fan.avatar}
+                        alt="Profile"
+                    />
                 </div>
-        
+                <h5 className="text-primary font-bold text-lg mt-3 dark:text-zinc-200">{fan.nickName}</h5>
+                <p className="text-zinc-600 dark:text-zinc-400 text-sm mb-3">{fan.bio}</p>
+
+                <div className="text-left mt-4">
+                    <h6 className="text-primary font-semibold mb-2 dark:text-zinc-200">Jogos Favoritos:</h6>
+                    <ul className="list-disc list-inside text-zinc-900 dark:text-zinc-300 text-sm">
+                        {fan.jogos?.map((game) => (
+                            <div key={game.id} className="flex items-center bg-zinc-100 dark:bg-zinc-950 rounded-full px-3 py-1 mb-1">
+                                <img src={game.imagemUrl} alt={game.descricao} className="w-5 h-5 mr-2 rounded-full" />
+                                <span className="text-sm text-zinc-800 dark:text-zinc-200">{game.descricao}</span>
+                            </div>
+                        ))}
+                    </ul>
+                </div>
+
+                {fan.redeSociais && fan.redeSociais.length > 0 && (
+
+                <div className="mt-4 flex justify-center space-x-4 bg-zinc-100 dark:bg-zinc-950 w-full p-2 rounded-lg shadow-sm">
+                    { fan.redeSociais?.map((redeSocial, index) => (
+                        <a
+                            key={index}
+                            href={redeSocial.urlRedeSocial}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-zinc-600 dark:text-zinc-200 hover:text-primary transition-colors duration-300"
+                        >
+                            {redeSocial.nomeredeSocial === 'Twitter' && <div>Twitter</div>}
+                            {redeSocial.nomeredeSocial === 'Instagram' && <div>Instagram</div>}
+                            {redeSocial.nomeredeSocial === 'GitHub' && <div>GitHub</div>}
+                        </a>
+                    
+                    ))}
+                </div>
+                )}
             </div>
-          </div>
         </div>
-      </div>
-      <div className="p-4">
-        <p className="text-zinc-600 dark:text-zinc-300 mb-4">{fan.bio}</p>
-        <div>
-          <h4 className="font-semibold mb-2 text-zinc-800 dark:text-white">Favorite Games</h4>
-          <div className="flex flex-wrap gap-2">
-            {fan.jogos!.map((game) => (
-              <div key={game.id} className="flex items-center bg-zinc-100 dark:bg-zinc-700 rounded-full px-3 py-1">
-                <img src={game.imagemUrl} alt={game.descricao} className="w-5 h-5 mr-2 rounded-full" />
-                <span className="text-sm text-zinc-800 dark:text-zinc-200">{game.descricao}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-    </div>
-  );
+    );
 };
 
 export default FanCard;

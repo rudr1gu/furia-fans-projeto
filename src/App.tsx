@@ -4,6 +4,7 @@ import { AuthProvider } from './context/AuthContext'
 import Login from './pages/login/Login'
 import Cadastro from './pages/cadastro-usuario/Cadastro'
 import Home from './components/home/Home'
+import Fans from './pages/fans/Fans'
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/cadastro" element={<Cadastro />} />
             <Route path="/home" element={<Home/>} />
+            <Route path="/fans" element={<Fans/>} />
           </Routes>
         </BrowserRouter>
       </AuthProvider>
