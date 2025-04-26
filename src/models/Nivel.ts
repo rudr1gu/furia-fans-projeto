@@ -1,6 +1,6 @@
 interface Nivel {
     id?: number;
-    nome: string;
+    nome?: string;
 }
 
 export default Nivel;
