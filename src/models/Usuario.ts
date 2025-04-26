@@ -10,6 +10,7 @@ interface Usuario {
     email: string;
     senha: string;
     tipo: string;
+    bio?: string;
     avatar?: string;
     dataCriacao?: Date;
     postagens?: Postagem[];
