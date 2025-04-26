@@ -42,7 +42,7 @@ const Fans = () => {
         <Navbar />
         {usuarios.length > 0 ? (
             <div className="min-h-screen bg-zinc-100 dark:bg-zinc-950 py-10 px-4 ">
-                <div className="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 mt-3">
+                <div className="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-3">
                     {usuarios.map((usuario) => (
                         <FansCard key={usuario.id} fan={usuario} />
                     ))}
