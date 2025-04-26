@@ -2,11 +2,12 @@ import { ChangeEvent, useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
 import UsuarioLogin from "../../models/UsuarioLogin";
+import logo from "../../assets/logo-furia.svg";
 
 const Login = () => {
 
     const navigate = useNavigate();
-    const {usuario, handleLogin, isLoading} = useContext(AuthContext);
+    const { usuario, handleLogin, isLoading } = useContext(AuthContext);
 
     const [usuarioLogin, setUsuarioLogin] = useState<UsuarioLogin>({} as UsuarioLogin);
 
@@ -15,7 +16,7 @@ const Login = () => {
             navigate("/home");
         }
     }, [usuario]);
-    
+
     const atualizarEstado = (e: ChangeEvent<HTMLInputElement>) => {
         setUsuarioLogin({
             ...usuarioLogin,
@@ -23,48 +24,57 @@ const Login = () => {
         });
     };
 
-    const login =(e: ChangeEvent<HTMLFormElement>) => {
+    const login = (e: ChangeEvent<HTMLFormElement>) => {
         e.preventDefault();
         handleLogin(usuarioLogin);
     };
 
     return (
-        <section className="flex flex-col justify-center items-center h-screen bg-gray-100">
-            <form onSubmit={login}>
-            <div>
-                <label className="block text-sm">Email</label>
-                <input
-                    id="usuario"
-                    type="email"
-                    name="email"
-                    placeholder="seu@email.com"
-                    className="mt-1 block w-full px-3 py-2 bg-white border border-slate-300 rounded-md text-sm shadow-sm focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500"
-                    value={usuarioLogin.email}
-                    onChange={(e) => atualizarEstado(e)}
-                    required
-                />
-            </div>
-            <div>
-                <label className="block text-sm">Senha</label>
-                <input
-                id="senha"
-                type="password"
-                name="senha"
-                placeholder="*********"
-                className="mt-1 block w-full px-3 py-2 bg-white border border-slate-300 rounded-md text-sm shadow-sm focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500"
-                value={usuarioLogin.senha}
-                onChange={(e) => atualizarEstado(e)}
-                required
-                />
-            </div>
-            <button
-                type="submit"
-                className="w-full mt-4 bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                disabled={isLoading}
-            >Logar</button>
-            </form>
+        <section className="min-h-screen flex flex-col justify-center items-center bg-zinc-200 dark:bg-zinc-900 transition-colors">
+            <form onSubmit={login} className="w-full max-w-md p-8 rounded-lg shadow-lg bg-white dark:bg-zinc-950 transition-colors">
+                <div className="flex justify-center mb-1">
+                    <img src={logo} alt="Logo" className="w-20 h-20" />
+                </div>
+                <h2 className="text-3xl font-bold mb-6 text-center text-black dark:text-white">Login</h2>
 
+                <div className="mb-4">
+                    <label className="block text-sm text-black dark:text-white mb-1">Email</label>
+                    <input
+                        id="email"
+                        type="email"
+                        name="email"
+                        placeholder="seu@email.com"
+                        className="w-full px-3 py-2 border border-black dark:border-white bg-transparent text-black dark:text-white focus:outline-none"
+                        value={usuarioLogin.email}
+                        onChange={atualizarEstado}
+                        required
+                    />
+                </div>
+
+                <div className="mb-4">
+                    <label className="block text-sm text-black dark:text-white mb-1">Senha</label>
+                    <input
+                        id="senha"
+                        type="password"
+                        name="senha"
+                        placeholder="*********"
+                        className="w-full px-3 py-2 border border-black dark:border-white bg-transparent text-black dark:text-white focus:outline-none"
+                        value={usuarioLogin.senha}
+                        onChange={atualizarEstado}
+                        required
+                    />
+                </div>
+
+                <button
+                    type="submit"
+                    className="w-full mt-4 bg-black dark:bg-white text-white dark:text-black font-bold py-2 px-4 border border-black dark:border-white hover:bg-zinc-800 dark:hover:bg-zinc-800 transition-colors"
+                    disabled={isLoading}
+                >
+                    {isLoading ? "Logando..." : "Entrar"}
+                </button>
+            </form>
         </section>
+
     );
 }
 

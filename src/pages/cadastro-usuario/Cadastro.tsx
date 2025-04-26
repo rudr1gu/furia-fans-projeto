@@ -19,7 +19,7 @@ const Cadastro = () => {
         email: "",
         senha: "",
         tipo: "usuario",
-        avatar: "string.png",
+        avatar: "https://static-cdn.jtvnw.net/jtv_user_pictures/27cebe1b-e7e5-46ad-a737-04d5a01684a9-profile_image-300x300.png",
         bio: "",
         redeSociais: [],
         jogos: [],
