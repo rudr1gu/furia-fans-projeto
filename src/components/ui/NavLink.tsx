@@ -12,8 +12,8 @@ export const NavLink: React.FC<NavLinkProps> = ({
   href,
   children,
   icon,
-  className = "px-3 py-2 rounded-md text-sm font-medium hover:bg-zinc-300 transition-colors duration-300",
-  activeClassName = "bg-gray-800",
+  className = "px-3 py-2 rounded-md text-sm font-medium hover:bg-zinc-300 dark:hover:bg-zinc-900 transition-colors duration-300",
+  activeClassName = "bg-zinc-300 dark:bg-zinc-900",
 }) => {
   // In a real app, we'd check if the current path matches the href
   const isActive = window.location.pathname === href;
