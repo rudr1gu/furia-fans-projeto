@@ -37,7 +37,7 @@ const Navbar: React.FC = () => {
                         </div>
                         <div className="hidden md:block">
                             <div className="ml-10 flex items-center justify-between space-x-4">
-                                <NavLink href="/" icon={<Home size={18} />}>
+                                <NavLink href="/home" icon={<Home size={18} />}>
                                     Inicio
                                 </NavLink>
                                 <NavLink href="/fans" icon={<Users size={18} />}>
@@ -46,10 +46,10 @@ const Navbar: React.FC = () => {
                                 <NavLink href="/feed" icon={<MessageSquare size={18} />}>
                                     Feed
                                 </NavLink>
-                                <NavLink href="/events" icon={<Calendar size={18} />}>
+                                <NavLink href="/eventos" icon={<Calendar size={18} />}>
                                     Eventos
                                 </NavLink>
-                                <NavLink href="/profile" icon={<User size={18} />}>
+                                <NavLink href="/perfil" icon={<User size={18} />}>
                                     Perfil
                                 </NavLink>
                             </div>
@@ -81,7 +81,7 @@ const Navbar: React.FC = () => {
                 <div className="md:hidden">
                     <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-gray-100 dark:bg-zinc-950">
                         <NavLink
-                            href="/"
+                            href="/home"
                             icon={<Home size={18} />}
                             className="block px-3 py-2 rounded-md text-base font-medium"
                             activeClassName="bg-gray-300 dark:bg-gray-800"
@@ -105,7 +105,7 @@ const Navbar: React.FC = () => {
                             Feed
                         </NavLink>
                         <NavLink
-                            href="/events"
+                            href="/eventos"
                             icon={<Calendar size={18} />}
                             className="block px-3 py-2 rounded-md text-base font-medium"
                             activeClassName="bg-gray-300 dark:bg-gray-800"
@@ -113,7 +113,7 @@ const Navbar: React.FC = () => {
                             Eventos
                         </NavLink>
                         <NavLink
-                            href="/profile"
+                            href="/perfil"
                             icon={<User size={18} />}
                             className="block px-3 py-2 rounded-md text-base font-medium"
                             activeClassName="bg-gray-300 dark:bg-gray-800"
