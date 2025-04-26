@@ -3,9 +3,22 @@ import { Menu, X, Users, MessageSquare, Calendar, User, Home, Sun, Moon } from '
 import { NavLink } from '../ui/NavLink';
 import Logo from '../ui/Logo';
 import { ThemeContext } from '../../context/ThemeContext';
+import { AuthContext } from '../../context/AuthContext';
+import { useNavigate } from 'react-router-dom';
 
 const Navbar: React.FC = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+    const navigate = useNavigate();
+
+    const { handleLogout } = useContext(AuthContext);
+
+    const handleLogoutClick = () => {
+        handleLogout();
+        navigate('/login');
+    };
+
+
 
     const themeContext = useContext(ThemeContext);
     if (!themeContext) {
@@ -49,7 +62,7 @@ const Navbar: React.FC = () => {
                         >
                             {themeContext.theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}
                         </button>
-                        <button className="bg-black text-white dark:bg-white dark:text-black hover:bg-gray-800 dark:hover:bg-gray-300 px-4 py-2 rounded font-medium transition-colors duration-300">
+                        <button onClick={handleLogoutClick} className="bg-black text-white dark:bg-white dark:text-black hover:bg-gray-800 dark:hover:bg-gray-300 px-4 py-2 rounded font-medium transition-colors duration-300">
                             Sair
                         </button>
                     </div>
@@ -66,7 +79,7 @@ const Navbar: React.FC = () => {
 
             {isMenuOpen && (
                 <div className="md:hidden">
-                    <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-gray-100 dark:bg-gray-900">
+                    <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-gray-100 dark:bg-zinc-950">
                         <NavLink
                             href="/"
                             icon={<Home size={18} />}
@@ -110,11 +123,11 @@ const Navbar: React.FC = () => {
                         <div className="flex flex-col gap-2 mt-4 px-3">
                             <button
                                 onClick={toggleTheme}
-                                className="p-2 rounded-full bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors self-start"
+                                className="p-2 rounded-full bg-gray-200 dark:bg-black hover:bg-gray-300 dark:hover:bg-zinc-900 transition-colors self-start"
                             >
                                 {themeContext.theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}
                             </button>
-                            <button className="w-full bg-black text-white dark:bg-white dark:text-black hover:bg-gray-800 dark:hover:bg-gray-300 px-4 py-2 rounded font-medium transition-colors duration-300">
+                            <button onClick={handleLogoutClick}  className="w-full bg-black text-white dark:bg-white dark:text-black hover:bg-gray-800 dark:hover:bg-gray-300 px-4 py-2 rounded font-medium transition-colors duration-300">
                                 Sair
                             </button>
                         </div>
