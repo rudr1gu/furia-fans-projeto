@@ -52,7 +52,7 @@ const Perfil = () => {
         }
     };
 
-    
+
 
     useEffect(() => {
         buscarUsuarioById();
@@ -86,7 +86,7 @@ const Perfil = () => {
     };
 
     const confirmarAlteracoes = async () => {
-        const updatedUser: Usuario = {
+        const updatedUser = {
             id: currentUser.id,
             nickName: currentUser.nickName,
             bio: currentUser.bio,
@@ -94,11 +94,35 @@ const Perfil = () => {
             email: currentUser.email,
             tipo: currentUser.tipo,
             senha: confirmarSenha,
-            redeSociais: [
-                { nomeredeSocial: 'twitter', urlRedeSocial: socialLinks.twitter, usuario: currentUser },
-                { nomeredeSocial: 'instagram', urlRedeSocial: socialLinks.instagram, usuario: currentUser },
-                { nomeredeSocial: 'twitch', urlRedeSocial: socialLinks.twitch, usuario: currentUser },
-                { nomeredeSocial: 'website', urlRedeSocial: socialLinks.website, usuario: currentUser }
+            redesSociais: [
+                {
+                    nomeRedeSocial: 'twitter',
+                    urlRedeSocial: socialLinks.twitter,
+                    usuario: {
+                        id: currentUser.id,
+                    }
+                },
+                { 
+                    nomeRedeSocial: 'instagram',
+                    urlRedeSocial: socialLinks.instagram,
+                    usuario: {
+                        id: currentUser.id,
+                    }
+                 },
+                { 
+                    nomeRedeSocial: 'twitch',
+                    urlRedeSocial: socialLinks.twitch,
+                    usuario: {
+                        id: currentUser.id,
+                    }
+                },
+                { 
+                    nomeRedeSocial: 'website',
+                    urlRedeSocial: socialLinks.website,
+                    usuario: {
+                        id: currentUser.id,
+                    } 
+                }
             ],
             jogos: favoriteGames,
         };

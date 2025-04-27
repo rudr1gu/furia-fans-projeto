@@ -1,5 +1,5 @@
 import React from 'react';
-// import { Twitter, Instagram, Twitch, Globe } from 'lucide-react';
+import { Twitter, Instagram, Twitch, Globe } from 'lucide-react';
 import Usuario from '../../models/Usuario';
 
 
@@ -33,25 +33,23 @@ const FanCard: React.FC<FanCardProps> = ({ fan }) => {
                     </ul>
                 </div>
 
-                {fan.redeSociais && fan.redeSociais.length > 0 && (
+               
 
                 <div className="mt-4 flex justify-center space-x-4 bg-zinc-100 dark:bg-zinc-950 w-full p-2 rounded-lg shadow-sm">
-                    { fan.redeSociais?.map((redeSocial, index) => (
+                    { fan.redesSociais?.map((redesSocial) => (
                         <a
-                            key={index}
-                            href={redeSocial.urlRedeSocial}
+                            href={redesSocial.urlRedeSocial}
                             target="_blank"
                             rel="noopener noreferrer"
                             className="text-zinc-600 dark:text-zinc-200 hover:text-primary transition-colors duration-300"
                         >
-                            {redeSocial.nomeredeSocial === 'Twitter' && <div>Twitter</div>}
-                            {redeSocial.nomeredeSocial === 'Instagram' && <div>Instagram</div>}
-                            {redeSocial.nomeredeSocial === 'GitHub' && <div>GitHub</div>}
+                            {redesSocial.nomeRedeSocial === 'twitter' && <Twitter size={20} />}
+                            {redesSocial.nomeRedeSocial === 'instagram' && <Instagram size={20} />}
+                            {redesSocial.nomeRedeSocial === 'twitch' && <Twitch size={20} />}
+                            {redesSocial.nomeRedeSocial === 'website' && <Globe size={20} />}
                         </a>
-                    
                     ))}
-                </div>
-                )}
+                </div>      
             </div>
         </div>
     );

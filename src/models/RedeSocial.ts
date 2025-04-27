@@ -2,7 +2,7 @@ import Usuario from "./Usuario";
 
 interface RedeSocial {
     id?: number;
-    nomeredeSocial: string;
+    nomeRedeSocial: string;
     urlRedeSocial: string;
     usuario: Usuario;
 }

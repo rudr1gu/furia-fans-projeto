@@ -15,7 +15,7 @@ interface Usuario {
     dataCriacao?: Date;
     postagens?: Postagem[];
     respostas?: Resposta[];
-    redeSociais?: RedeSocial[];
+    redesSociais?: RedeSocial[];
     nivel?: Nivel;
     jogos?: Jogo[];
 }

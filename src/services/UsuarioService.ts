@@ -23,7 +23,7 @@ class UsuarioService {
         setDados(response.data);
     }
 
-    updateUsuario = async(usuario: Usuario, setDados: Function, header: Object) => {
+    updateUsuario = async(usuario: Object, setDados: Function, header: Object) => {
         const response = await baseApi.put<Usuario>(`/usuarios/atualizar`, usuario , header);
         setDados(response.data);
     }
