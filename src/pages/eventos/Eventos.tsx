@@ -1,71 +1,46 @@
-import React from 'react';
+import React, { useContext, useState } from 'react';
 import Evento from '../../models/Evento';
 import EventosCard from '../../components/eventos/EventosCard';
 import Navbar from '../../components/navbar/Navbar';
+import { useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
+import { AuthContext } from '../../context/AuthContext';
+import EventoService from '../../services/EventoService';
 
 const Events: React.FC = () => {
-    const events: Evento[] = [
-        {
-            id: 1,
-            titulo: 'Game Development Bootcamp',
-            descricao: 'Dive into the world of game development with our intensive bootcamp. Learn about coding, design, and production pipelines!',
-            imagemUrl: 'https://images.pexels.com/photos/907238/pexels-photo-907238.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
-            dataInicio: '2025-05-05',
-            localizacao: 'Tech Hub Conference Center',
-            horaInicio: '10:00 AM - 5:00 PM',
-            link: 'https://www.example.com/game-dev-bootcamp',
+
+    const navigate = useNavigate();
+    const { usuario, handleLogout } = useContext(AuthContext);
+    const [eventos, setEventos] = useState<Evento[]>([]);
+
+    const token = usuario.token;
+
+    const eventoService = new EventoService();
+    const header = {
+        headers: {
+            Authorization: token,
         },
-        {
-            id: 2,
-            titulo: 'Indie Games Showcase',
-            descricao: 'Come experience the best indie games developed by upcoming studios and passionate solo developers.',
-            imagemUrl: 'https://images.pexels.com/photos/194511/pexels-photo-194511.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
-            dataInicio: '2025-05-12',
-            localizacao: 'Downtown Convention Center',
-            horaInicio: '2:00 PM - 9:00 PM',
-            link: 'https://www.example.com/indie-showcase',
-        },
-        {
-            id: 3,
-            titulo: 'Esports Workshop',
-            descricao: 'Learn from the pros! Our players will teach you strategies, tips, and tricks to improve your gaming skills.',
-            imagemUrl: 'https://images.pexels.com/photos/8132566/pexels-photo-8132566.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
-            dataInicio: '2025-04-10',
-            localizacao: 'Virtual Event',
-            horaInicio: '9:00 AM - 12:00 PM',
-            link: 'https://www.example.com/esports-workshop',
-        },
-        {
-            id: 4,
-            titulo: 'VR Experience Day',
-            descricao: 'Step into new realities! Test out the latest VR technology and discover the future of immersive gaming.',
-            imagemUrl: 'https://images.pexels.com/photos/775281/pexels-photo-775281.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
-            dataInicio: '2025-06-01',
-            localizacao: 'Innovation Park',
-            horaInicio: '11:00 AM - 4:00 PM',
-            link: 'https://www.example.com/vr-experience',
-        },
-        {
-            id: 5,
-            titulo: 'Streaming for Beginners',
-            descricao: 'Want to start your own stream? Learn the basics of setting up your gear, building your brand, and engaging your audience!',
-            imagemUrl: 'https://images.pexels.com/photos/771742/pexels-photo-771742.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
-            dataInicio: '2025-05-20',
-            localizacao: 'Virtual Event',
-            horaInicio: '3:00 PM - 6:00 PM',
-            link: 'https://www.example.com/streaming-workshop',
-        },
-        {
-            id: 6,
-            titulo: 'Board Games Night',
-            descricao: 'Unplug and unwind with an evening full of classic and new board games! Bring your friends!',
-            imagemUrl: 'https://images.pexels.com/photos/846083/pexels-photo-846083.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
-            dataInicio: '2025-04-30',
-            localizacao: 'Community Center Hall',
-            horaInicio: '6:00 PM - 11:00 PM',
-            link: 'https://www.example.com/board-games-night',
-        },
-    ];
+    };
+
+    const buscarEventos = async () => {
+        try {
+            await eventoService.getAllEventos(setEventos, header);
+        } catch (error) {
+            console.error('Erro ao burcas eventos:', error);
+        }
+    }
+
+    useEffect(() => {
+        if (!token) {
+            navigate('/login');
+            handleLogout();
+        } else {
+            buscarEventos();
+        }
+    }, [token, navigate]);
+
+
+    const events: Evento[] =  eventos
 
     const sortedEvents = [...events].sort((a, b) =>
         new Date(a.dataInicio).getTime() - new Date(b.dataInicio).getTime()
