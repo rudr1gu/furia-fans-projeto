@@ -6,6 +6,7 @@ import Cadastro from './pages/cadastro-usuario/Cadastro'
 import Home from './components/home/Home'
 import Fans from './pages/fans/Fans'
 import Perfil from './pages/perfil/Perfil'
+import Eventos from './pages/eventos/Eventos'
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Login />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/eventos" element={<Eventos />} />
             <Route path="/cadastro" element={<Cadastro />} />
             <Route path="/home" element={<Home/>} />
             <Route path="/fans" element={<Fans/>} />
