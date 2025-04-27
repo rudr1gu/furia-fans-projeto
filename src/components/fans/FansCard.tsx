@@ -33,23 +33,28 @@ const FanCard: React.FC<FanCardProps> = ({ fan }) => {
                     </ul>
                 </div>
 
-               
 
-                <div className="mt-4 flex justify-center space-x-4 bg-zinc-100 dark:bg-zinc-950 w-full p-2 rounded-lg shadow-sm">
-                    { fan.redesSociais?.map((redesSocial) => (
-                        <a
-                            href={redesSocial.urlRedeSocial}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-zinc-600 dark:text-zinc-200 hover:text-primary transition-colors duration-300"
-                        >
-                            {redesSocial.nomeRedeSocial === 'twitter' && <Twitter size={20} />}
-                            {redesSocial.nomeRedeSocial === 'instagram' && <Instagram size={20} />}
-                            {redesSocial.nomeRedeSocial === 'twitch' && <Twitch size={20} />}
-                            {redesSocial.nomeRedeSocial === 'website' && <Globe size={20} />}
-                        </a>
-                    ))}
-                </div>      
+
+                {
+                    fan.redesSociais && fan.redesSociais.length > 0 && (
+                        <div className="mt-4 flex justify-center space-x-4 bg-zinc-100 dark:bg-zinc-950 w-full p-2 rounded-lg shadow-sm">
+                            {fan.redesSociais?.map((redesSocial) => (
+                                <a
+                                    key={redesSocial.id}
+                                    href={redesSocial.urlRedeSocial}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="text-zinc-600 dark:text-zinc-200 hover:text-primary transition-colors duration-300 hover:scale-110 hover:text-zinc-900 dark:hover:text-zinc-100"
+                                >
+                                    {redesSocial.nomeRedeSocial === 'twitter' && redesSocial.urlRedeSocial && <Twitter size={20} />}
+                                    {redesSocial.nomeRedeSocial === 'instagram' && redesSocial.urlRedeSocial && <Instagram size={20} />}
+                                    {redesSocial.nomeRedeSocial === 'twitch' && redesSocial.urlRedeSocial && <Twitch size={20} />}
+                                    {redesSocial.nomeRedeSocial === 'website' && redesSocial.urlRedeSocial && <Globe size={20} />}
+                                </a>
+                            ))}
+                        </div>
+                    )
+                }
             </div>
         </div>
     );
