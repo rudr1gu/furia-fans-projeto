@@ -12,7 +12,7 @@ const Perfil = () => {
 
     const { usuario, handleLogout } = React.useContext(AuthContext);
     const token = usuario.token;
-    
+
     const navigate = useNavigate();
 
     const jogoService = new JogoService();
@@ -20,6 +20,10 @@ const Perfil = () => {
 
     const [jogos, setJogos] = useState<Jogo[]>([]);
     const [currentUser, setCurrentUser] = useState<Usuario>({} as Usuario);
+
+    const [confirmarSenha, setConfirmarSenha] = useState('');
+
+    const [modalOpen, setModalOpen] = useState<boolean>(false);
 
     const buscarJogos = async () => {
         try {
@@ -76,6 +80,51 @@ const Perfil = () => {
             [platform]: e.target.value,
         });
     };
+
+    const salvarAlteracoes = async () => {
+        const updatedUser: Usuario = {
+            id: currentUser.id,
+            nickName: currentUser.nickName,
+            bio: currentUser.bio,
+            avatar: currentUser.avatar,
+            email: currentUser.email,
+            tipo: currentUser.tipo,
+            senha: confirmarSenha,
+            redeSociais: [
+                {
+                    nomeredeSocial: 'twitter',
+                    urlRedeSocial: socialLinks.twitter,
+                    usuario: currentUser
+                },
+                {
+                    nomeredeSocial: 'instagram',
+                    urlRedeSocial: socialLinks.instagram,
+                    usuario: currentUser
+                },
+                {
+                    nomeredeSocial: 'twitch',
+                    urlRedeSocial: socialLinks.twitch,
+                    usuario: currentUser
+                },
+                {
+                    nomeredeSocial: 'website',
+                    urlRedeSocial: socialLinks.website,
+                    usuario: currentUser
+                }
+            ],
+            jogos: favoriteGames,
+        };
+
+        try {
+            await usuarioService.updateUsuario(updatedUser, setCurrentUser, {
+                headers: { Authorization: token },
+            });
+            alert('Alterações salvas com sucesso!');
+        } catch (error) {
+            console.error("Erro ao salvar alterações:", error);
+            alert('Erro ao salvar alterações. Tente novamente mais tarde.');
+        }
+    }
 
     return (
         <div>
@@ -221,7 +270,7 @@ const Perfil = () => {
                                     disabled={!gameToAdd}
                                     className="bg-black text-white px-4 py-2 rounded-md hover:bg-zinc-800 transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
                                     onClick={() => {
-                                        const selectedGame = availableGames.find(game => game.id === Number(gameToAdd)&& !isNaN(Number(gameToAdd)));
+                                        const selectedGame = availableGames.find(game => game.id === Number(gameToAdd) && !isNaN(Number(gameToAdd)));
                                         if (selectedGame) {
                                             setFavoriteGames([...favoriteGames, selectedGame]);
                                             setGameToAdd('');
@@ -233,9 +282,14 @@ const Perfil = () => {
                             </div>
                         </div>
                         <div className="flex justify-end">
-                            <button className="bg-black text-white px-6 py-2 rounded-md hover:bg-zinc-800 transition-colors duration-300">
+                            <button
+                                onClick={salvarAlteracoes}
+                                disabled={!currentUser.nickName || !currentUser.bio}
+                                type="button"
+                                className="bg-black text-white px-6 py-2 rounded-md hover:bg-zinc-800 transition-colors duration-300">
                                 Salvar Alterações
                             </button>
+
                         </div>
                     </div>
                 </div>
