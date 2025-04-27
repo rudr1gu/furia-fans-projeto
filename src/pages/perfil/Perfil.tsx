@@ -1,38 +1,45 @@
 import React, { useEffect, useState } from 'react';
-import { Twitter, Instagram, Twitch, Globe, Plus, X } from 'lucide-react';
-import Jogo from '../../models/Jogo';
-import JogoService from '../../services/JogoService';
-import Navbar from '../../components/navbar/Navbar';
-import { AuthContext } from '../../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
+import { Plus, Twitter, Instagram, Twitch, Globe, X } from 'lucide-react';
+import JogoService from '../../services/JogoService';
 import UsuarioService from '../../services/UsuarioService';
+import { AuthContext } from '../../context/AuthContext';
+import Jogo from '../../models/Jogo';
 import Usuario from '../../models/Usuario';
+import Navbar from '../../components/navbar/Navbar';
+import ModalConfirmarSenha from './modal/ModalConfirmarSenha';
+
 
 const Perfil = () => {
-
     const { usuario, handleLogout } = React.useContext(AuthContext);
     const token = usuario.token;
-
     const navigate = useNavigate();
-
     const jogoService = new JogoService();
     const usuarioService = new UsuarioService();
 
     const [jogos, setJogos] = useState<Jogo[]>([]);
     const [currentUser, setCurrentUser] = useState<Usuario>({} as Usuario);
 
-    const [confirmarSenha, setConfirmarSenha] = useState('');
+    const [socialLinks, setSocialLinks] = useState({
+        twitter: '',
+        instagram: '',
+        twitch: '',
+        website: '',
+    });
+    const [favoriteGames, setFavoriteGames] = useState<Jogo[]>([]);
+    const [gameToAdd, setGameToAdd] = useState('');
 
-    const [modalOpen, setModalOpen] = useState<boolean>(false);
+    const [confirmarSenha, setConfirmarSenha] = useState('');
+    const [modalOpen, setModalOpen] = useState(false);
 
     const buscarJogos = async () => {
         try {
-            const jogo = await jogoService.getAllJogos()
+            const jogo = await jogoService.getAllJogos();
             setJogos(jogo);
         } catch (error) {
             console.error("Erro ao buscar jogos:", error);
         }
-    }
+    };
 
     const buscarUsuarioById = async () => {
         try {
@@ -44,6 +51,8 @@ const Perfil = () => {
             handleLogout();
         }
     };
+
+    
 
     useEffect(() => {
         buscarUsuarioById();
@@ -62,15 +71,6 @@ const Perfil = () => {
 
     const availableGames: Jogo[] = jogos;
 
-    const [socialLinks, setSocialLinks] = useState({
-        twitter: '',
-        instagram: '',
-        twitch: '',
-        website: '',
-    });
-    const [favoriteGames, setFavoriteGames] = useState<Jogo[]>([]);
-    const [gameToAdd, setGameToAdd] = useState('');
-
     const handleSocialChange = (
         e: React.ChangeEvent<HTMLInputElement>,
         platform: keyof typeof socialLinks
@@ -81,7 +81,11 @@ const Perfil = () => {
         });
     };
 
-    const salvarAlteracoes = async () => {
+    const abrirModalSalvar = () => {
+        setModalOpen(true);
+    };
+
+    const confirmarAlteracoes = async () => {
         const updatedUser: Usuario = {
             id: currentUser.id,
             nickName: currentUser.nickName,
@@ -91,26 +95,10 @@ const Perfil = () => {
             tipo: currentUser.tipo,
             senha: confirmarSenha,
             redeSociais: [
-                {
-                    nomeredeSocial: 'twitter',
-                    urlRedeSocial: socialLinks.twitter,
-                    usuario: currentUser
-                },
-                {
-                    nomeredeSocial: 'instagram',
-                    urlRedeSocial: socialLinks.instagram,
-                    usuario: currentUser
-                },
-                {
-                    nomeredeSocial: 'twitch',
-                    urlRedeSocial: socialLinks.twitch,
-                    usuario: currentUser
-                },
-                {
-                    nomeredeSocial: 'website',
-                    urlRedeSocial: socialLinks.website,
-                    usuario: currentUser
-                }
+                { nomeredeSocial: 'twitter', urlRedeSocial: socialLinks.twitter, usuario: currentUser },
+                { nomeredeSocial: 'instagram', urlRedeSocial: socialLinks.instagram, usuario: currentUser },
+                { nomeredeSocial: 'twitch', urlRedeSocial: socialLinks.twitch, usuario: currentUser },
+                { nomeredeSocial: 'website', urlRedeSocial: socialLinks.website, usuario: currentUser }
             ],
             jogos: favoriteGames,
         };
@@ -120,18 +108,21 @@ const Perfil = () => {
                 headers: { Authorization: token },
             });
             alert('Alterações salvas com sucesso!');
+            setModalOpen(false);
+            setConfirmarSenha('');
         } catch (error) {
             console.error("Erro ao salvar alterações:", error);
             alert('Erro ao salvar alterações. Tente novamente mais tarde.');
         }
-    }
+    };
 
     return (
-        <div>
+        <div className="bg-gray-100 dark:bg-zinc-950 min-h-screen">
             <Navbar />
             <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-                <div className="bg-white dark:bg-zinc-800 shadow-md overflow-hidden mb-8">
-                    <div className="bg-gradient-to-r from-zinc-800 to-black p-8 relative">
+                <div className="bg-white dark:bg-zinc-900 shadow-md rounded-lg overflow-hidden mb-8">
+                    {/* Header */}
+                    <div className="bg-black p-8 relative">
                         <div className="flex flex-col sm:flex-row items-center sm:items-start gap-6">
                             <div className="relative">
                                 <img
@@ -151,24 +142,17 @@ const Perfil = () => {
                                     </button>
                                 </div>
                                 <div className="flex justify-center sm:justify-start space-x-3">
-                                    <button className="text-white hover:text-blue-400 transition-colors">
-                                        <Twitter size={20} />
-                                    </button>
-                                    <button className="text-white hover:text-pink-500 transition-colors">
-                                        <Instagram size={20} />
-                                    </button>
-                                    <button className="text-white hover:text-purple-500 transition-colors">
-                                        <Twitch size={20} />
-                                    </button>
-                                    <button className="text-white hover:text-zinc-300 transition-colors">
-                                        <Globe size={20} />
-                                    </button>
+                                    <Twitter size={20} className="text-white hover:text-blue-400 transition-colors" />
+                                    <Instagram size={20} className="text-white hover:text-pink-500 transition-colors" />
+                                    <Twitch size={20} className="text-white hover:text-purple-500 transition-colors" />
+                                    <Globe size={20} className="text-white hover:text-zinc-300 transition-colors" />
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div className="p-6">
-                        <div className="mb-6">
+
+                    <div className="p-6 space-y-6">
+                        <div>
                             <label className="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-2">
                                 Nick Name
                             </label>
@@ -176,10 +160,11 @@ const Perfil = () => {
                                 type="text"
                                 value={currentUser.nickName}
                                 onChange={(e) => setCurrentUser({ ...currentUser, nickName: e.target.value })}
-                                className="w-full p-3 border border-black dark:border-zinc-600 focus:ring-2 focus:ring-black dark:focus:ring-white dark:bg-zinc-700 dark:text-white"
+                                className="w-full p-3 border border-black dark:border-zinc-800 focus:ring-2 focus:ring-black dark:focus:ring-zinc-700 dark:bg-zinc-900 dark:text-white"
                             />
                         </div>
-                        <div className="mb-6">
+
+                        <div>
                             <label className="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-2">
                                 Bio
                             </label>
@@ -187,65 +172,38 @@ const Perfil = () => {
                                 value={currentUser.bio}
                                 onChange={(e) => setCurrentUser({ ...currentUser, bio: e.target.value })}
                                 rows={2}
-                                className="w-full p-3 border border-black dark:border-zinc-600 focus:ring-2 focus:ring-black dark:focus:ring-white dark:bg-zinc-700 dark:text-white resize-none"
+                                className="w-full p-3 border border-black dark:border-zinc-800 focus:ring-2 focus:ring-black dark:focus:ring-zinc-700 dark:bg-zinc-900 dark:text-white resize-none"
                             />
                         </div>
-                        <div className="mb-6">
+
+                        <div>
                             <h3 className="text-lg font-semibold mb-3 text-zinc-900 dark:text-white">
                                 Links Redes Sociais
                             </h3>
                             <div className="space-y-4">
-                                <div className="flex items-center gap-3">
-                                    <Twitter size={20} className="text-blue-400" />
-                                    <input
-                                        type="text"
-                                        placeholder="Twitter URL"
-                                        value={socialLinks.twitter}
-                                        onChange={(e) => handleSocialChange(e, 'twitter')}
-                                        className="flex-1 p-2 border border-black dark:border-zinc-600 focus:ring-2 focus:ring-black dark:focus:ring-white dark:bg-zinc-700 dark:text-white"
-                                    />
-                                </div>
-                                <div className="flex items-center gap-3">
-                                    <Instagram size={20} className="text-pink-500" />
-                                    <input
-                                        type="text"
-                                        placeholder="Instagram URL"
-                                        value={socialLinks.instagram}
-                                        onChange={(e) => handleSocialChange(e, 'instagram')}
-                                        className="flex-1 p-2 border border-black dark:border-zinc-600 focus:ring-2 focus:ring-black dark:focus:ring-white dark:bg-zinc-700 dark:text-white"
-                                    />
-                                </div>
-                                <div className="flex items-center gap-3">
-                                    <Twitch size={20} className="text-purple-500" />
-                                    <input
-                                        type="text"
-                                        placeholder="Twitch URL"
-                                        value={socialLinks.twitch}
-                                        onChange={(e) => handleSocialChange(e, 'twitch')}
-                                        className="flex-1 p-2 border border-black dark:border-zinc-600 focus:ring-2 focus:ring-black dark:focus:ring-white dark:bg-zinc-700 dark:text-white"
-                                    />
-                                </div>
-                                <div className="flex items-center gap-3">
-                                    <Globe size={20} className="text-zinc-500" />
-                                    <input
-                                        type="text"
-                                        placeholder="Website URL"
-                                        value={socialLinks.website}
-                                        onChange={(e) => handleSocialChange(e, 'website')}
-                                        className="flex-1 p-2 border border-black dark:border-zinc-600 focus:ring-2 focus:ring-black dark:focus:ring-white dark:bg-zinc-700 dark:text-white"
-                                    />
-                                </div>
+                                {['twitter', 'instagram', 'twitch', 'website'].map((platform) => (
+                                    <div className="flex items-center gap-3" key={platform}>
+                                        <input
+                                            type="text"
+                                            placeholder={`${platform.charAt(0).toUpperCase() + platform.slice(1)} URL`}
+                                            value={socialLinks[platform as keyof typeof socialLinks]}
+                                            onChange={(e) => handleSocialChange(e, platform as keyof typeof socialLinks)}
+                                            className="flex-1 p-2 border border-black dark:border-zinc-800 focus:ring-2 focus:ring-black dark:focus:ring-zinc-700 dark:bg-zinc-900 dark:text-white"
+                                        />
+                                    </div>
+                                ))}
                             </div>
                         </div>
-                        <div className="mb-6">
+
+                        <div>
                             <h3 className="text-lg font-semibold mb-3 text-zinc-900 dark:text-white">
                                 Jogos Favoritos
                             </h3>
                             <div className="flex flex-wrap gap-2 mb-4">
                                 {favoriteGames.map((game) => (
-                                    <div key={game.id} className="flex items-center bg-zinc-100 dark:bg-zinc-700 rounded-full px-3 py-1">
+                                    <div key={game.id} className="flex items-center bg-zinc-100 dark:bg-zinc-950 rounded-full px-3 py-1">
                                         <img src={game.imagemUrl} alt={game.descricao} className="w-5 h-5 mr-2 rounded-full" />
-                                        <span className="text-sm text-zinc-800 dark:text-zinc-200">{game.descricao}</span>
+                                        <span className="text-sm text-zinc-900 dark:text-zinc-200">{game.descricao}</span>
                                         <button
                                             onClick={() => setFavoriteGames(favoriteGames.filter((g) => g.id !== game.id))}
                                             className="ml-2 text-zinc-600 dark:text-zinc-400 hover:text-red-500 dark:hover:text-red-400 transition-colors"
@@ -259,41 +217,42 @@ const Perfil = () => {
                                 <select
                                     value={gameToAdd}
                                     onChange={(e) => setGameToAdd(e.target.value)}
-                                    className="flex-1 p-2 border border-black dark:border-zinc-600 focus:ring-2 focus:ring-black dark:focus:ring-white dark:bg-zinc-700 dark:text-white"
+                                    className="flex-1 p-2 border border-black dark:border-zinc-800 focus:ring-2 focus:ring-black dark:focus:ring-zinc-700 dark:bg-zinc-900 dark:text-white"
                                 >
                                     <option value="">Selecione seu jogo favorito...</option>
-                                    {availableGames.map(game => (
+                                    {availableGames.map((game) => (
                                         <option key={game.id} value={game.id}>{game.descricao}</option>
                                     ))}
                                 </select>
                                 <button
-                                    disabled={!gameToAdd}
-                                    className="bg-black text-white px-4 py-2 rounded-md hover:bg-zinc-800 transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
                                     onClick={() => {
-                                        const selectedGame = availableGames.find(game => game.id === Number(gameToAdd) && !isNaN(Number(gameToAdd)));
-                                        if (selectedGame) {
-                                            setFavoriteGames([...favoriteGames, selectedGame]);
-                                            setGameToAdd('');
-                                        }
+                                        const selectedGame = availableGames.find(g => g.id === Number(gameToAdd) && !favoriteGames.some(fg => fg.id === g.id));
+                                        if (selectedGame) setFavoriteGames([...favoriteGames, selectedGame]);
                                     }}
+                                    disabled={!gameToAdd}
+                                    className="bg-black text-white px-4 py-2 rounded hover:bg-zinc-900 disabled:opacity-50"
                                 >
                                     Adicionar
                                 </button>
                             </div>
                         </div>
-                        <div className="flex justify-end">
+
+                        <div className="text-right">
                             <button
-                                onClick={salvarAlteracoes}
-                                disabled={!currentUser.nickName || !currentUser.bio}
-                                type="button"
-                                className="bg-black text-white px-6 py-2 rounded-md hover:bg-zinc-800 transition-colors duration-300">
+                                onClick={abrirModalSalvar}
+                                className="bg-black text-white px-6 py-2 rounded hover:bg-zinc-900 transition-colors"
+                            >
                                 Salvar Alterações
                             </button>
-
                         </div>
                     </div>
                 </div>
             </div>
+
+            {
+                modalOpen && (
+                    <ModalConfirmarSenha confirmarAlteracoes={confirmarAlteracoes} confirmarSenha={confirmarSenha} setConfirmarSenha={setConfirmarSenha} setModalOpen={setModalOpen} />)
+            }
         </div>
     );
 };

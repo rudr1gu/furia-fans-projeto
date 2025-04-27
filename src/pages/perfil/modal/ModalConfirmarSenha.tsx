@@ -1,32 +1,40 @@
 
 interface ModalConfirmarSenhaProps {
-
+    confirmarSenha: string;
+    setConfirmarSenha: (senha: string) => void;
+    setModalOpen: (open: boolean) => void;
+    confirmarAlteracoes: () => void;
 }
 
-const ModalConfirmarSenha = () => {
+const ModalConfirmarSenha = ({confirmarSenha, setConfirmarSenha, setModalOpen, confirmarAlteracoes}: ModalConfirmarSenhaProps) => {
     return (
-        // <div className="bg-white dark:bg-zinc-800 shadow-md p-6">
-        //     <h3 className="text-lg font-semibold mb-4 text-zinc-900 dark:text-white">Alterar Senha</h3>
-        //     <div className="mb-6">
-        //         <label className="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-2">
-        //             Nova Senha
-        //         </label>
-        //         <input
-        //             type="password"
-        //             value={confirmarSenha}
-        //             onChange={(e) => setConfirmarSenha(e.target.value)}
-        //             className="w-full p-3 border border-black dark:border-zinc-600 focus:ring-2 focus:ring-black dark:focus:ring-white dark:bg-zinc-700 dark:text-white"
-        //         />
-        //     </div>
-        //     <button
-        //         onClick={salvarAlteracoes}
-        //         disabled={!confirmarSenha}
-        //         type="button"
-        //         className="bg-black text-white px-6 py-2 rounded-md hover:bg-zinc-800 transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed">
-        //         Alterar Senha
-        //     </button>
-        // </div>
-        <></>
-    );
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+            <div className="bg-white dark:bg-zinc-900 p-6 rounded shadow-md w-96">
+                <h2 className="text-lg font-semibold text-center mb-4 dark:text-white">Confirme sua senha</h2>
+                <input
+                    type="password"
+                    placeholder="Digite sua senha"
+                    value={confirmarSenha}
+                    onChange={(e) => setConfirmarSenha(e.target.value)}
+                    className="w-full p-2 border border-black dark:border-zinc-800 focus:ring-2 focus:ring-black dark:bg-zinc-900 dark:text-white mb-4"
+                />
+                <div className="flex justify-between">
+                    <button
+                        onClick={() => setModalOpen(false)}
+                        className="px-4 py-2 bg-zinc-700 hover:bg-zinc-800 text-white rounded"
+                    >
+                        Cancelar
+                    </button>
+                    <button
+                        onClick={confirmarAlteracoes}
+                        className="px-4 py-2 bg-black hover:bg-zinc-950 text-white rounded"
+                    >
+                        Confirmar
+                    </button>
+                </div>
+            </div>
+        </div>
+    )
 }
+
 export default ModalConfirmarSenha;
