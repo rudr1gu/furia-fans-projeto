@@ -40,12 +40,6 @@ const PostagemCard: React.FC<PostagemCardProps> = ({ postagem }) => {
                 </div>
 
                 <p className="text-zinc-800 dark:text-zinc-200 mb-4">{postagem.conteudo}</p>
-
-                {postagem.imagemUrl && (
-                    <div className="rounded-lg overflow-hidden mb-4">
-                        <img src={postagem.imagemUrl} alt="Post content" className="w-full object-cover" />
-                    </div>
-                )}
                 <div className="flex items-center justify-between pt-2 border-t border-zinc-200 dark:border-zinc-700">
                     <button className="flex items-center space-x-1 text-zinc-500 dark:text-zinc-400 hover:text-blue-500 transition-colors">
                         <MessageCircle size={20} />
