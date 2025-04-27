@@ -72,7 +72,7 @@ const Events: React.FC = () => {
     );
 
     return (
-        <>
+        <div className="bg-gray-100 dark:bg-zinc-950 min-h-screen">
             <Navbar />
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
                 <div className="mb-8">
@@ -105,7 +105,7 @@ const Events: React.FC = () => {
                     ))}
                 </div>
             </div>
-        </>
+        </div>
     );
 };
 
