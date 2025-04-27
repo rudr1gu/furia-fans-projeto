@@ -2,8 +2,8 @@ interface Evento{
     id?: number;
     titulo: string;
     descricao: string;
-    dataInicio: Date;
-    horaInicio: Date;
+    dataInicio: string;
+    horaInicio: string;
     localizacao: string;
     link: string;
     imagemUrl: string;
