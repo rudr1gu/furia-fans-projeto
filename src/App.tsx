@@ -7,6 +7,7 @@ import Home from './components/home/Home'
 import Fans from './pages/fans/Fans'
 import Perfil from './pages/perfil/Perfil'
 import Eventos from './pages/eventos/Eventos'
+import Feed from './pages/feed/Feed'
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
             <Route path="/home" element={<Home/>} />
             <Route path="/fans" element={<Fans/>} />
             <Route path="/perfil" element={<Perfil/>} />
+            <Route path="/feed" element={<Feed/>} />
           </Routes>
         </BrowserRouter>
       </AuthProvider>
