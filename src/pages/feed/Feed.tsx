@@ -130,7 +130,7 @@ const Feed = () => {
 
                 <div className="space-y-6">
                     {postagensOrdenadas.map((post) =>  (
-                        <PostagemCard key={post.id} postagem={post} deletePostagem={deletePostagem} usuario={usuarioLogado} />
+                        <PostagemCard key={post.id} postagem={post} deletePostagem={deletePostagem} fan={usuarioLogado} />
                     ))}
                 </div>
             </div>

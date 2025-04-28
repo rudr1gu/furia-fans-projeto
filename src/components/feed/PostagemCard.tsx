@@ -2,20 +2,36 @@ import { MessageCircle, Trash } from "lucide-react";
 import Postagem from "../../models/Postagem"
 import Usuario from "../../models/Usuario";
 import ModalDelete from "./ModalDelete";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import ModalFansCard from "../fans/ModalFansCard";
+import ModalResposta from "./ModalResposta";
+import PostagemService from "../../services/PostagemService";
+import { AuthContext } from "../../context/AuthContext";
 
 interface PostagemCardProps {
     postagem: Postagem;
     deletePostagem: Function;
-    usuario: Usuario;
+    fan: Usuario;
 }
 
-const PostagemCard: React.FC<PostagemCardProps> = ({ postagem, deletePostagem, usuario }) => {
+const PostagemCard: React.FC<PostagemCardProps> = ({ postagem, deletePostagem, fan }) => {
 
     const [isOpen, setIsOpen] = useState(false);
     const [IsFanCardOpen, setIsFanCardOpen] = useState(false);
+    const [postagemAtualizada, setPostagemAtualizada] = useState<Postagem>({} as Postagem);
 
+    const [showModalResposta, setShowModalResposta] = useState(false);
+
+    const postagemService = new PostagemService();
+
+    const { usuario } = useContext(AuthContext);
+    const token = usuario.token;
+
+    const header = {
+        headers: {
+            Authorization: token,
+        },
+    };
 
     const formatDate = (date: Date) => {
         const options: Intl.DateTimeFormatOptions = {
@@ -44,7 +60,18 @@ const PostagemCard: React.FC<PostagemCardProps> = ({ postagem, deletePostagem, u
         setIsFanCardOpen(false);
     }
 
- 
+    const buscarPostagemAtualizada = async() => {
+        try {
+            await postagemService.getByIdPostagem(postagem.id!, setPostagemAtualizada, header);
+        } catch (error) {
+            console.error('Erro ao buscar postagem atualizada:', error);
+        }  
+    }
+
+    const handleOpenModalResposta = async () => {
+        await buscarPostagemAtualizada();
+        setShowModalResposta(true);
+    };
 
     return (
         <div className="bg-white dark:bg-zinc-800 rounded-lg shadow-md overflow-hidden mb-4">
@@ -57,7 +84,7 @@ const PostagemCard: React.FC<PostagemCardProps> = ({ postagem, deletePostagem, u
                                 alt={postagem.usuario.nickName}
                                 className="w-10 h-10 rounded-full object-cover"
                             />
-                    
+
                         </button>
                         <div>
                             <h3 className="font-semibold text-zinc-900 dark:text-white">{postagem.usuario.nickName}</h3>
@@ -73,12 +100,23 @@ const PostagemCard: React.FC<PostagemCardProps> = ({ postagem, deletePostagem, u
                         <ModalDelete onClose={onClose} onDelete={onDelete} />
                     }
                     {IsFanCardOpen && <ModalFansCard fan={postagem.usuario} onClose={onCloseFanCard} />}
-            
+                    {showModalResposta && (
+                        <ModalResposta
+                            postagem={postagemAtualizada}
+                            respostas={postagemAtualizada.respostas!}
+                            onClose={() => setShowModalResposta(false)}
+                            reloadPostagem={buscarPostagemAtualizada}
+                        />
+                    )}
+
+
                 </div>
 
                 <p className="text-zinc-800 dark:text-zinc-200 mb-4">{postagem.conteudo}</p>
                 <div className="flex items-center justify-between pt-2 border-t border-zinc-200 dark:border-zinc-700">
-                    <button className="flex items-center space-x-1 text-zinc-500 dark:text-zinc-400 hover:text-blue-500 transition-colors">
+                    <button
+                        onClick={handleOpenModalResposta}
+                        className="flex items-center space-x-1 text-zinc-500 dark:text-zinc-400 hover:text-blue-500 transition-colors">
                         <MessageCircle size={20} />
                         <span>{postagem.respostas?.length}</span>
                     </button>
