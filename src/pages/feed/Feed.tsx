@@ -6,13 +6,18 @@ import { useNavigate } from "react-router-dom";
 import { Send } from "lucide-react";
 import PostagemService from "../../services/PostagemService";
 import Navbar from "../../components/navbar/Navbar";
+import UsuarioService from "../../services/UsuarioService";
+import Usuario from "../../models/Usuario";
 
 const Feed = () => {
 
     const { usuario, handleLogout } = useContext(AuthContext);
     const token = usuario.token;
 
+    const usuarioService = new UsuarioService();
     const postagemService = new PostagemService();
+
+    const [usuarioLogado, setUsuarioLogado] = useState<Usuario>({} as Usuario);
 
     const navigate = useNavigate();
 
@@ -20,14 +25,14 @@ const Feed = () => {
     const [newPost, setNewPost] = useState<Postagem>({} as Postagem);
 
     useEffect(() => {
-        if (!token) {
-            navigate('/login');
-            handleLogout();
-        } else {
+        if (token) {
             buscarPostagens();
+            buscarUsuarioLogado();
+        } else {
+            handleLogout();
+            navigate("/login");
         }
-
-    }, [token, navigate]);
+    }, [token]);
 
     const header = {
         headers: {
@@ -43,16 +48,41 @@ const Feed = () => {
         }
     };
 
+    const buscarUsuarioLogado = async () => {
+        try {
+            await usuarioService.getByIdUsuario(usuario.id!, setUsuarioLogado, header);
+        } catch (error) {
+            console.error('Erro ao buscar usuário logado:', error);
+        }
+    };
+
+
     const handlePostSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         try {
-            // Aqui você pode fazer a chamada para criar uma nova postagem
-            // await postagemService.createPostagem(newPost, setPostagens, header);
-            setNewPost({} as Postagem); // Limpa o campo de texto após o envio
+            const postagemData = {
+                titulo: "postagem feed",
+                conteudo: newPost.conteudo,
+                usuario: {id : usuario.id },
+
+            };
+            await postagemService.createPostagem(postagemData, header);
+            setNewPost((prev) => ({ ...prev, conteudo: "" }));
+            await buscarPostagens();
         } catch (error) {
             console.error('Erro ao criar postagem:', error);
         }
     };
+
+    const ordenarPostagensPorData = (postagens: Postagem[]) => {
+        return postagens.sort((a, b) => {
+            const dateA = a.dataCriacao ? new Date(a.dataCriacao).getTime() : 0;
+            const dateB = b.dataCriacao ? new Date(b.dataCriacao).getTime() : 0;
+            return dateB - dateA;
+        })
+    };
+
+    const postagensOrdenadas = ordenarPostagensPorData(postagens);
 
     return (
         <section className="bg-zinc-100 dark:bg-zinc-950 min-h-screen">
@@ -62,11 +92,11 @@ const Feed = () => {
                     <form onSubmit={handlePostSubmit}>
                         <div className="flex items-center space-x-3 mb-4">
                             <img
-                                src="https://images.pexels.com/photos/1681010/pexels-photo-1681010.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+                                src={usuarioLogado.avatar}
                                 alt="Your avatar"
                                 className="w-10 h-10 rounded-full object-cover"
                             />
-                            <span className="font-medium text-zinc-900 dark:text-white">Current User</span>
+                            <span className="font-medium text-zinc-900 dark:text-white">{usuarioLogado.nickName}</span>
                         </div>
                         <textarea
                             value={newPost.conteudo}
@@ -90,7 +120,7 @@ const Feed = () => {
                 </div>
 
                 <div className="space-y-6">
-                    {postagens.map((post) => (
+                    {postagensOrdenadas.map((post) =>  (
                         <PostagemCard key={post.id} postagem={post} />
                     ))}
                 </div>

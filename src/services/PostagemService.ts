@@ -11,9 +11,9 @@ class PostagemService {
         setDados(response.data);
     }
 
-    createPostagem = async (postagem: Object, setDados: Function, header: Object) => {
+    createPostagem = async (postagem: Object, header: Object) => {
         const response = await baseApi.post('/postagens/cadastrar', postagem, header);
-        setDados(response.data);
+        return response.data;
     }
 }
 
