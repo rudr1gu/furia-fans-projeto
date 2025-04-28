@@ -112,7 +112,7 @@ const Feed = () => {
                             onChange={(e) => setNewPost({ ...newPost, conteudo: e.target.value })}
                             required
                             className="w-full p-3 border border-black dark:border-zinc-500 focus:ring-2 focus:ring-black dark:focus:ring-white dark:bg-zinc-800 dark:text-white resize-none"
-                            placeholder="What's on your mind?"
+                            placeholder="No que você está pensando?"
                             rows={3}
                         />
                         <div className="flex justify-end mt-3">

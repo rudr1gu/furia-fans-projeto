@@ -5,7 +5,6 @@ import Postagem from "../../models/Postagem";
 import Resposta from "../../models/Resposta";
 import RespostaService from "../../services/RespostaService";
 import { AuthContext } from "../../context/AuthContext";
-import { pre } from "framer-motion/client";
 
 
 interface ModalRespostaProps {
@@ -38,7 +37,7 @@ const ModalResposta: React.FC<ModalRespostaProps> = ({ postagem, respostas, onCl
     },
   };
 
-  const [novaResposta, setNovaResposta] = useState<ModeloResposta>({} as ModeloResposta); 
+  const [novaResposta, setNovaResposta] = useState<ModeloResposta>({} as ModeloResposta);
 
   const respostaService = new RespostaService();
 
@@ -105,7 +104,7 @@ const ModalResposta: React.FC<ModalRespostaProps> = ({ postagem, respostas, onCl
         </div>
         <div className="border-t border-zinc-200 dark:border-zinc-700 p-4 flex flex-col gap-3">
           <textarea
-            className="w-full p-3 rounded-md bg-zinc-100 dark:bg-zinc-800 text-zinc-800 dark:text-zinc-200 resize-none focus:outline-none"
+            className="w-full p-3 border border-black bg-white dark:bg-zinc-800 text-zinc-800 dark:text-zinc-200 resize-none focus:outline-none"
             rows={3}
             placeholder="Escreva sua resposta..."
             value={novaResposta.conteudo}
@@ -113,7 +112,7 @@ const ModalResposta: React.FC<ModalRespostaProps> = ({ postagem, respostas, onCl
           />
           <button
             onClick={handleSubmit}
-            className="self-end bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md transition-colors"
+            className="self-end bg-black hover:bg-zinc-700 text-white px-4 py-2 transition-colors"
           >
             Enviar Resposta
           </button>
