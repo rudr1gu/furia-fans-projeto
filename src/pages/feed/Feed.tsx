@@ -97,7 +97,7 @@ const Feed = () => {
         <section className="bg-zinc-100 dark:bg-zinc-950 min-h-screen">
             <Navbar />
             <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-                <div className="bg-white dark:bg-zinc-800 rounded-lg shadow-md p-4 mb-8">
+                <div className="bg-white dark:bg-zinc-900 rounded-lg shadow-md p-4 mb-8">
                     <form onSubmit={handlePostSubmit}>
                         <div className="flex items-center space-x-3 mb-4">
                             <img
@@ -111,7 +111,7 @@ const Feed = () => {
                             value={newPost.conteudo}
                             onChange={(e) => setNewPost({ ...newPost, conteudo: e.target.value })}
                             required
-                            className="w-full p-3 border border-black dark:border-zinc-500 focus:ring-2 focus:ring-black dark:focus:ring-white dark:bg-zinc-800 dark:text-white resize-none"
+                            className="w-full p-3 border border-black dark:border-white focus:ring-2 focus:ring-black dark:focus:ring-white dark:bg-zinc-800 dark:text-white resize-none"
                             placeholder="No que você está pensando?"
                             rows={3}
                         />
