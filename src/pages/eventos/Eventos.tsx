@@ -53,7 +53,7 @@ const Events: React.FC = () => {
                 <div className="mb-8">
                     <div className="relative rounded-xl overflow-hidden">
                         <img
-                            src="https://images.pexels.com/photos/1293269/pexels-photo-1293269.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+                            src="https://preview.redd.it/5n24r06ovr581.png?auto=webp&s=5fa64ce7a5b6b08214fe3ca2db6f767fd191992c"
                             alt="Featured Event"
                             className="w-full h-64 md:h-80 object-cover"
                         />
@@ -62,13 +62,12 @@ const Events: React.FC = () => {
                                 <span className="bg-white text-black px-3 py-1 rounded-full text-sm font-medium mb-2 inline-block">
                                     Futuros Eventos
                                 </span>
-                                <h2 className="text-white text-2xl md:text-4xl font-bold mb-2">Panthers Summer Championship</h2>
-                                <p className="text-white text-opacity-90 mb-4 max-w-2xl">
-                                    Join us for our biggest tournament of the year with teams competing from all around the world!
+                                <h2 className="text-white text-2xl md:text-3xl font-bold mb-2">
+                                    Participe dos nossos eventos
+                                </h2>
+                                <p className="text-gray-300 mb-4">
+                                    Venha fazer parte da nossa comunidade e aproveite os eventos que preparamos para você.
                                 </p>
-                                <button className="bg-white text-black hover:bg-gray-200 px-6 py-2 rounded-md font-medium transition-colors duration-300">
-                                    Learn More
-                                </button>
                             </div>
                         </div>
                     </div>

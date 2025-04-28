@@ -13,6 +13,7 @@ import Evento from '../../models/Evento';
 import Navbar from '../navbar/Navbar';
 
 import logoFuria from '../../assets/logo-furia.svg';
+import Footer from '../footer/Footer';
 
 
 const Home = () => {
@@ -157,6 +158,7 @@ const Home = () => {
                     </div>
                 </section>
             </div>
+            <Footer />
         </section>
     );
 };
