@@ -1,8 +1,10 @@
 import { useContext, useEffect, useState } from "react";
-import { AuthContext } from "../../context/AuthContext";
 import Usuario from "../../models/Usuario";
-import FanCard from "./FansCard";
+
 import UsuarioService from "../../services/UsuarioService";
+
+import { AuthContext } from "../../context/AuthContext";
+import FanCard from "./FansCard";
 
 interface ModalFansCardProps {
     fan: Usuario;
@@ -42,17 +44,20 @@ const ModalFansCard: React.FC<ModalFansCardProps> = ({ fan, onClose }) => {
 
     return (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
-            <div className="relative w-full max-w-md bg-white dark:bg-zinc-900 rounded-xl shadow-2xl p-20 animate-fade-in">
+            <div
+                className="relative w-full max-w-md bg-white dark:bg-zinc-900 rounded-xl shadow-2xl p-20
+                transform transition-all duration-300 ease-out scale-95 opacity-0 animate-fade-in-up"
+            >
                 <button
                     onClick={onClose}
                     className="absolute top-4 right-4 text-zinc-500 hover:text-red-500 transition-colors text-xl"
                 >
                     ×
                 </button>
+
                 <div className="flex flex-col items-center">
                     <FanCard fan={autorPostagem} />
                 </div>
-
             </div>
         </div>
     );

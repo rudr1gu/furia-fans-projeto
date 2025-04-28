@@ -53,7 +53,6 @@ const Perfil = () => {
     };
 
 
-
     useEffect(() => {
         buscarUsuarioById();
     }, [token, handleLogout]);
