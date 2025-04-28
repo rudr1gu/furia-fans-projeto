@@ -5,7 +5,7 @@ import Usuario from "../../models/Usuario";
 import Jogo from "../../models/Jogo";
 import JogoService from "../../services/JogoService";
 import avatares from "./avatares/avatares";
-import logo from "../../assets/logo-furia.svg";
+import logo from "../../assets/furia.png";
 
 const Cadastro = () => {
     const usuarioService = new UsuarioService();
@@ -21,7 +21,7 @@ const Cadastro = () => {
         tipo: "usuario",
         avatar: "https://static-cdn.jtvnw.net/jtv_user_pictures/27cebe1b-e7e5-46ad-a737-04d5a01684a9-profile_image-300x300.png",
         bio: "",
-        redeSociais: [],
+        redesSociais: [],
         jogos: [],
         nivel: { id: 1 },
     });
@@ -111,7 +111,7 @@ const Cadastro = () => {
                         id="nickName"
                         type="text"
                         name="nickName"
-                        placeholder="seuNickName"
+                        placeholder="Nickname"
                         className="w-full px-3 py-2 border border-black dark:border-white bg-transparent text-black dark:text-white focus:outline-none"
                         value={usuario.nickName}
                         onChange={atualizarEstado}
@@ -131,6 +131,11 @@ const Cadastro = () => {
                         onChange={atualizarEstado}
                         required
                     />
+                    {
+                        usuario.email.length > 0 && !usuario.email.includes("@") && (
+                            <p className="text-sm text-red-500">Email inválido!</p>
+                        )
+                    }
                 </div>
 
                 <div className="mb-4">
@@ -145,6 +150,16 @@ const Cadastro = () => {
                         onChange={atualizarEstado}
                         required
                     />
+                    {confirmarSenha.length > 0 && (
+                        <p className={`text-sm ${confirmarSenha === usuario.senha ? 'text-green-500' : 'text-red-500'}`}>
+                            {confirmarSenha === usuario.senha ? 'As senhas conferem!' : 'As senhas não conferem!'}
+                        </p>
+                    )}
+                    {
+                        usuario.senha.length > 0 && usuario.senha.length < 8 && (
+                            <p className="text-sm text-red-500">A senha deve ter pelo menos 8 caracteres!</p>
+                        )
+                    }
                 </div>
 
                 <div className="mb-4">
