@@ -111,7 +111,7 @@ const Feed = () => {
                             value={newPost.conteudo}
                             onChange={(e) => setNewPost({ ...newPost, conteudo: e.target.value })}
                             required
-                            className="w-full p-3 border border-zinc-300 dark:border-zinc-600 rounded-lg focus:ring-2 focus:ring-black dark:focus:ring-white dark:bg-zinc-700 dark:text-white resize-none"
+                            className="w-full p-3 border border-black dark:border-zinc-500 focus:ring-2 focus:ring-black dark:focus:ring-white dark:bg-zinc-800 dark:text-white resize-none"
                             placeholder="What's on your mind?"
                             rows={3}
                         />

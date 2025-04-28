@@ -1,6 +1,8 @@
 import { MessageCircle, Trash } from "lucide-react";
 import Postagem from "../../models/Postagem"
 import Usuario from "../../models/Usuario";
+import ModalDelete from "./ModalDelete";
+import { useState } from "react";
 
 interface PostagemCardProps {
     postagem: Postagem;
@@ -9,6 +11,8 @@ interface PostagemCardProps {
 }
 
 const PostagemCard: React.FC<PostagemCardProps> = ({ postagem, deletePostagem, usuario }) => {
+
+    const [isOpen, setIsOpen] = useState(false);
 
     const formatDate = (date: Date) => {
         const options: Intl.DateTimeFormatOptions = {
@@ -21,6 +25,18 @@ const PostagemCard: React.FC<PostagemCardProps> = ({ postagem, deletePostagem, u
         return new Date(date).toLocaleDateString('pt-BR', options);
     };
 
+    const onDelete = () => {
+        deletePostagem(postagem.id);
+    }
+
+    const onClose = () => {
+        setIsOpen(false);
+    }
+
+    const onOpen = () => {
+        setIsOpen(true);
+    }
+ 
 
     return (
         <div className="bg-white dark:bg-zinc-800 rounded-lg shadow-md overflow-hidden mb-4">
@@ -38,10 +54,14 @@ const PostagemCard: React.FC<PostagemCardProps> = ({ postagem, deletePostagem, u
                         </div>
                     </div>
                     {usuario.id === postagem.usuario.id &&
-                        <button onClick={() => deletePostagem(postagem.id)} className="text-zinc-500 dark:text-zinc-400 hover:text-red-500 transition-colors">
+                        <button onClick={onOpen} className="text-zinc-500 dark:text-zinc-400 hover:text-red-500 dark:hover:text-red-500 transition-colors">
                             <Trash size={20} />
                         </button>
                     }
+                    {isOpen &&
+                        <ModalDelete onClose={onClose} onDelete={onDelete} />
+                    }
+                    
 
                 </div>
 
