@@ -74,7 +74,7 @@ const PostagemCard: React.FC<PostagemCardProps> = ({ postagem, deletePostagem, f
     };
 
     return (
-        <div className="bg-white dark:bg-zinc-800 rounded-lg shadow-md overflow-hidden mb-4">
+        <div className="bg-white dark:bg-zinc-900 rounded-lg shadow-md overflow-hidden mb-4">
             <div className="p-4">
                 <div className="flex justify-between items-center mb-4">
                     <div className="flex items-center space-x-3">
@@ -91,7 +91,7 @@ const PostagemCard: React.FC<PostagemCardProps> = ({ postagem, deletePostagem, f
                             <p className="text-xs text-zinc-500 dark:text-zinc-400">{formatDate(postagem.dataCriacao!)}</p>
                         </div>
                     </div>
-                    {usuario.id === postagem.usuario.id &&
+                    {fan.id === postagem.usuario.id &&
                         <button onClick={onOpen} className="text-zinc-500 dark:text-zinc-400 hover:text-red-500 dark:hover:text-red-500 transition-colors">
                             <Trash size={20} />
                         </button>

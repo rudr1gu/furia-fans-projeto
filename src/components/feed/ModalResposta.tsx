@@ -104,7 +104,7 @@ const ModalResposta: React.FC<ModalRespostaProps> = ({ postagem, respostas, onCl
         </div>
         <div className="border-t border-zinc-200 dark:border-zinc-700 p-4 flex flex-col gap-3">
           <textarea
-            className="w-full p-3 border border-black bg-white dark:bg-zinc-800 text-zinc-800 dark:text-zinc-200 resize-none focus:outline-none"
+            className="w-full p-3 border border-black dark:border-white bg-white dark:bg-zinc-800 text-zinc-800 dark:text-zinc-200 resize-none focus:outline-none"
             rows={3}
             placeholder="Escreva sua resposta..."
             value={novaResposta.conteudo}
