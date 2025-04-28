@@ -3,6 +3,7 @@ import Postagem from "../../models/Postagem"
 import Usuario from "../../models/Usuario";
 import ModalDelete from "./ModalDelete";
 import { useState } from "react";
+import ModalFansCard from "../fans/ModalFansCard";
 
 interface PostagemCardProps {
     postagem: Postagem;
@@ -13,6 +14,8 @@ interface PostagemCardProps {
 const PostagemCard: React.FC<PostagemCardProps> = ({ postagem, deletePostagem, usuario }) => {
 
     const [isOpen, setIsOpen] = useState(false);
+    const [IsFanCardOpen, setIsFanCardOpen] = useState(false);
+
 
     const formatDate = (date: Date) => {
         const options: Intl.DateTimeFormatOptions = {
@@ -36,6 +39,11 @@ const PostagemCard: React.FC<PostagemCardProps> = ({ postagem, deletePostagem, u
     const onOpen = () => {
         setIsOpen(true);
     }
+
+    const onCloseFanCard = () => {
+        setIsFanCardOpen(false);
+    }
+
  
 
     return (
@@ -43,11 +51,14 @@ const PostagemCard: React.FC<PostagemCardProps> = ({ postagem, deletePostagem, u
             <div className="p-4">
                 <div className="flex justify-between items-center mb-4">
                     <div className="flex items-center space-x-3">
-                        <img
-                            src={postagem.usuario.avatar}
-                            alt={postagem.usuario.nickName}
-                            className="w-10 h-10 rounded-full object-cover"
-                        />
+                        <button onClick={() => setIsFanCardOpen(true)} className="flex items-center space-x-3">
+                            <img
+                                src={postagem.usuario.avatar}
+                                alt={postagem.usuario.nickName}
+                                className="w-10 h-10 rounded-full object-cover"
+                            />
+                    
+                        </button>
                         <div>
                             <h3 className="font-semibold text-zinc-900 dark:text-white">{postagem.usuario.nickName}</h3>
                             <p className="text-xs text-zinc-500 dark:text-zinc-400">{formatDate(postagem.dataCriacao!)}</p>
@@ -61,8 +72,8 @@ const PostagemCard: React.FC<PostagemCardProps> = ({ postagem, deletePostagem, u
                     {isOpen &&
                         <ModalDelete onClose={onClose} onDelete={onDelete} />
                     }
-                    
-
+                    {IsFanCardOpen && <ModalFansCard fan={postagem.usuario} onClose={onCloseFanCard} />}
+            
                 </div>
 
                 <p className="text-zinc-800 dark:text-zinc-200 mb-4">{postagem.conteudo}</p>
