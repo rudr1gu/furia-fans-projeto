@@ -1,11 +1,14 @@
-import { MessageCircle, MoreHorizontal } from "lucide-react";
+import { MessageCircle, Trash } from "lucide-react";
 import Postagem from "../../models/Postagem"
+import Usuario from "../../models/Usuario";
 
 interface PostagemCardProps {
     postagem: Postagem;
+    deletePostagem: Function;
+    usuario: Usuario;
 }
 
-const PostagemCard: React.FC<PostagemCardProps> = ({ postagem }) => {
+const PostagemCard: React.FC<PostagemCardProps> = ({ postagem, deletePostagem, usuario }) => {
 
     const formatDate = (date: Date) => {
         const options: Intl.DateTimeFormatOptions = {
@@ -34,9 +37,12 @@ const PostagemCard: React.FC<PostagemCardProps> = ({ postagem }) => {
                             <p className="text-xs text-zinc-500 dark:text-zinc-400">{formatDate(postagem.dataCriacao!)}</p>
                         </div>
                     </div>
-                    <button className="text-zinc-500 hover:text-zinc-700 dark:text-zinc-400 dark:hover:text-zinc-300">
-                        <MoreHorizontal size={20} />
-                    </button>
+                    {usuario.id === postagem.usuario.id &&
+                        <button onClick={() => deletePostagem(postagem.id)} className="text-zinc-500 dark:text-zinc-400 hover:text-red-500 transition-colors">
+                            <Trash size={20} />
+                        </button>
+                    }
+
                 </div>
 
                 <p className="text-zinc-800 dark:text-zinc-200 mb-4">{postagem.conteudo}</p>

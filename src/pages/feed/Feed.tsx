@@ -74,6 +74,15 @@ const Feed = () => {
         }
     };
 
+    const deletePostagem = async (id: number) => {
+        try {
+            await postagemService.deletePostagem(id, header);
+            await buscarPostagens();
+        } catch (error) {
+            console.error('Erro ao deletar postagem:', error);
+        }
+    }
+
     const ordenarPostagensPorData = (postagens: Postagem[]) => {
         return postagens.sort((a, b) => {
             const dateA = a.dataCriacao ? new Date(a.dataCriacao).getTime() : 0;
@@ -121,7 +130,7 @@ const Feed = () => {
 
                 <div className="space-y-6">
                     {postagensOrdenadas.map((post) =>  (
-                        <PostagemCard key={post.id} postagem={post} />
+                        <PostagemCard key={post.id} postagem={post} deletePostagem={deletePostagem} usuario={usuarioLogado} />
                     ))}
                 </div>
             </div>

@@ -15,6 +15,11 @@ class PostagemService {
         const response = await baseApi.post('/postagens/cadastrar', postagem, header);
         return response.data;
     }
+
+    deletePostagem = async (id: number, header: Object) => {
+        const response = await baseApi.delete(`/postagens/${id}`, header);
+        return response.data;
+    }
 }
 
 export default PostagemService;
