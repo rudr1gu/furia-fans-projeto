@@ -3,6 +3,7 @@ import UsuarioLogin from "../models/UsuarioLogin";
 import UsuarioService from "../services/UsuarioService";
 import ToastAlert from "../utils/ToastAlert";
 
+
 interface AuthContextProps {
     usuario: UsuarioLogin;
     userType: string | null;
