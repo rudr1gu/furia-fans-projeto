@@ -76,7 +76,7 @@ const ModalResposta: React.FC<ModalRespostaProps> = ({ postagem, respostas, onCl
         animate={{ x: "0%" }}
         exit={{ x: "100%" }}
         transition={{ type: "spring", stiffness: 300, damping: 30 }}
-        className="fixed top-0 right-0 h-full w-1/3 bg-white dark:bg-zinc-900 z-50 shadow-2xl flex flex-col"
+        className="fixed top-0 right-0 h-full w-full sm:w-2/3 md:w-1/2 lg:w-1/3 bg-white dark:bg-zinc-900 z-50 shadow-2xl flex flex-col"
       >
         <div className="flex items-center justify-between p-4 border-b border-zinc-200 dark:border-zinc-700">
           <h2 className="text-lg font-semibold text-zinc-900 dark:text-white">Responder</h2>
@@ -94,12 +94,32 @@ const ModalResposta: React.FC<ModalRespostaProps> = ({ postagem, respostas, onCl
             {respostas.length > 0 ? (
               respostas.map((resposta) => (
                 <div key={resposta.id} className="p-3 bg-zinc-100 dark:bg-zinc-700 rounded-md">
+                  <div className="flex items-center gap-3 mb-2">
+                    <img
+                      src={resposta.usuario?.avatar}
+                      alt={`Avatar de ${resposta.usuario?.nickName}`}
+                      className="w-8 h-8 rounded-full object-cover"
+                    />
+                    <div>
+                      <p className="text-sm font-medium text-zinc-800 dark:text-zinc-200">
+                        {resposta.usuario?.nickName}
+                      </p>
+                      <p className="text-xs text-zinc-500 dark:text-zinc-400">
+                        {new Date(resposta.dataCriacao!).toLocaleDateString("pt-BR", {
+                          day: "2-digit",
+                          month: "short",
+                          year: "numeric",
+                        })}
+                      </p>
+                    </div>
+                  </div>
                   <p className="text-sm text-zinc-800 dark:text-zinc-200">{resposta.conteudo}</p>
                 </div>
               ))
             ) : (
               <p className="text-center text-zinc-500 dark:text-zinc-400">Ainda não há respostas.</p>
             )}
+
           </div>
         </div>
         <div className="border-t border-zinc-200 dark:border-zinc-700 p-4 flex flex-col gap-3">
