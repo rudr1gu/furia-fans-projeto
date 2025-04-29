@@ -10,10 +10,14 @@ import Eventos from './pages/eventos/Eventos'
 import Feed from './pages/feed/Feed'
 import Layout from './pages/layout/Layout'
 
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from 'react-toastify'
+
 function App() {
   return (
     <>
       <AuthProvider>
+        <ToastContainer />
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Login />} />
