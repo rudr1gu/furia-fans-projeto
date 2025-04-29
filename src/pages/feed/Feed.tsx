@@ -5,7 +5,6 @@ import { AuthContext } from "../../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { Send } from "lucide-react";
 import PostagemService from "../../services/PostagemService";
-import Navbar from "../../components/navbar/Navbar";
 import UsuarioService from "../../services/UsuarioService";
 import Usuario from "../../models/Usuario";
 
@@ -95,7 +94,6 @@ const Feed = () => {
 
     return (
         <section className="bg-zinc-100 dark:bg-zinc-950 min-h-screen">
-            <Navbar />
             <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
                 <div className="bg-white dark:bg-zinc-900 rounded-lg shadow-md p-4 mb-8">
                     <form onSubmit={handlePostSubmit}>

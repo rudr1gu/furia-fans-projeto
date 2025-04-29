@@ -6,7 +6,6 @@ import UsuarioService from '../../services/UsuarioService';
 import { AuthContext } from '../../context/AuthContext';
 import Jogo from '../../models/Jogo';
 import Usuario from '../../models/Usuario';
-import Navbar from '../../components/navbar/Navbar';
 import ModalConfirmarSenha from './modal/ModalConfirmarSenha';
 
 
@@ -141,7 +140,6 @@ const Perfil = () => {
 
     return (
         <div className="bg-gray-100 dark:bg-zinc-950 min-h-screen">
-            <Navbar />
             <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
                 <div className="bg-white dark:bg-zinc-900 shadow-md rounded-lg overflow-hidden mb-8">
                     {/* Header */}

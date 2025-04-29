@@ -3,7 +3,6 @@ import UsuarioService from "../../services/UsuarioService";
 import { useContext, useEffect, useState } from "react";
 import Usuario from "../../models/Usuario";
 import { AuthContext } from "../../context/AuthContext";
-import Navbar from "../../components/navbar/Navbar";
 import FansCard from "../../components/fans/FansCard";
 import JogoService from "../../services/JogoService";
 import Jogo from "../../models/Jogo";
@@ -97,7 +96,6 @@ const Fans = () => {
     
     return (
         <>
-            <Navbar />
             {usuarios.length > 0 ? (
                 <div className="min-h-screen bg-zinc-100 dark:bg-zinc-950 py-10 px-4">
                     <div className="max-w-7xl mx-auto flex flex-col gap-6">

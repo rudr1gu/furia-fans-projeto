@@ -1,7 +1,6 @@
 import React, { useContext, useState } from 'react';
 import Evento from '../../models/Evento';
 import EventosCard from '../../components/eventos/EventosCard';
-import Navbar from '../../components/navbar/Navbar';
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import { AuthContext } from '../../context/AuthContext';
@@ -48,7 +47,6 @@ const Events: React.FC = () => {
 
     return (
         <div className="bg-gray-100 dark:bg-zinc-950 min-h-screen">
-            <Navbar />
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
                 <div className="mb-8">
                     <div className="relative rounded-xl overflow-hidden">

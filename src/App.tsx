@@ -8,6 +8,7 @@ import Fans from './pages/fans/Fans'
 import Perfil from './pages/perfil/Perfil'
 import Eventos from './pages/eventos/Eventos'
 import Feed from './pages/feed/Feed'
+import Layout from './pages/layout/Layout'
 
 function App() {
   return (
@@ -16,13 +17,15 @@ function App() {
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Login />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/eventos" element={<Eventos />} />
             <Route path="/cadastro" element={<Cadastro />} />
-            <Route path="/home" element={<Home/>} />
-            <Route path="/fans" element={<Fans/>} />
-            <Route path="/perfil" element={<Perfil/>} />
-            <Route path="/feed" element={<Feed/>} />
+            <Route path="/login" element={<Login />} />
+            <Route element={<Layout />}>
+              <Route path="home" element={<Home />} />
+              <Route path="fans" element={<Fans />} />
+              <Route path="perfil" element={<Perfil />} />
+              <Route path="feed" element={<Feed />} />
+              <Route path="eventos" element={<Eventos />} />
+            </Route>
           </Routes>
         </BrowserRouter>
       </AuthProvider>
