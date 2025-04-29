@@ -4,7 +4,7 @@ import { Instagram, TwitterIcon } from 'lucide-react';
 
 const Footer = () => {
     return (
-        <footer className="bg-white border-t border-zinc-300 dark:border-zinc-950 shadow-md dark:bg-black text-zinc-950 dark:text-white py-10 mt-12">
+        <footer className="bg-white border-t border-zinc-300 dark:border-zinc-950 shadow-md dark:bg-black text-zinc-950 dark:text-white py-10 ">
         <div className="max-w-5xl mx-auto px-4 space-y-8">
           <nav className="flex flex-wrap justify-center md:justify-start space-x-4">
             <Link to="/home" className="hover:underline dark:text-gray-300 dark:hover:text-white">Início</Link>

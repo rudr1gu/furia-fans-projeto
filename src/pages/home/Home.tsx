@@ -1,6 +1,6 @@
-import EventosCard from '../eventos/EventosCard';
-import PostagemCard from '../feed/PostagemCard';
-import FanCard from '../fans/FansCard';
+import EventosCard from '../../components/eventos/EventosCard';
+import PostagemCard from '../../components/feed/PostagemCard';
+import FanCard from '../../components/fans/FansCard';
 import Usuario from '../../models/Usuario';
 import Postagem from '../../models/Postagem';
 
@@ -10,10 +10,7 @@ import UsuarioService from '../../services/UsuarioService';
 import PostagemService from '../../services/PostagemService';
 import EventoService from '../../services/EventoService';
 import Evento from '../../models/Evento';
-import Navbar from '../navbar/Navbar';
-
-import logoFuria from '../../assets/logo-furia.svg';
-import Footer from '../footer/Footer';
+import { section } from 'framer-motion/client';
 
 
 const Home = () => {
@@ -104,8 +101,7 @@ const Home = () => {
     };
 
     return (
-        <section className="min-h-screen flex flex-col bg-zinc-200 dark:bg-zinc-950 transition-colors">
-            <Navbar />
+        <section className="bg-gray-100 dark:bg-zinc-950 min-h-screen">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
                 <section className="mb-10">
                     <div className="relative rounded-xl overflow-hidden mb-8">
@@ -158,7 +154,7 @@ const Home = () => {
                     </div>
                 </section>
             </div>
-            <Footer />
+
         </section>
     );
 };
