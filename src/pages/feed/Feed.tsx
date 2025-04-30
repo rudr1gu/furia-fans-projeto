@@ -7,6 +7,7 @@ import { Send } from "lucide-react";
 import PostagemService from "../../services/PostagemService";
 import UsuarioService from "../../services/UsuarioService";
 import Usuario from "../../models/Usuario";
+import ToastAlert from "../../utils/ToastAlert";
 
 const Feed = () => {
 
@@ -44,6 +45,7 @@ const Feed = () => {
             await postagemService.getAllPostagens(setPostagens, header);
         } catch (error) {
             console.error('Erro ao buscar postagens:', error);
+            handleLogout();
         }
     };
 
@@ -68,8 +70,10 @@ const Feed = () => {
             await postagemService.createPostagem(postagemData, header);
             setNewPost((prev) => ({ ...prev, conteudo: "" }));
             await buscarPostagens();
+            ToastAlert("Postagem criada com sucesso!", "sucesso");
         } catch (error) {
             console.error('Erro ao criar postagem:', error);
+            ToastAlert("Erro ao criar postagem!", "erro");
         }
     };
 
@@ -77,8 +81,11 @@ const Feed = () => {
         try {
             await postagemService.deletePostagem(id, header);
             await buscarPostagens();
+            ToastAlert("Postagem deletada com sucesso!", "sucesso");
+            
         } catch (error) {
             console.error('Erro ao deletar postagem:', error);
+            ToastAlert("Erro ao deletar postagem!", "erro");
         }
     }
 
@@ -113,6 +120,20 @@ const Feed = () => {
                             placeholder="No que você está pensando?"
                             rows={3}
                         />
+                        {
+                            newPost.conteudo && (
+                                <div className="flex justify-end mb-2">
+                                    <span className="text-sm text-zinc-500 dark:text-zinc-400">{newPost.conteudo.length}/280</span>
+                                </div>
+                            )
+                        }
+                        {
+                            newPost.conteudo && (
+                                <div className="flex justify-end mb-2">
+                                    <span className="text-sm text-zinc-500 dark:text-zinc-400">O Minimo de caracteres é 5 e o Máximo 280 caracteres</span>
+                                </div>
+                            )
+                        }
                         <div className="flex justify-end mt-3">
                             <button
                                 type="submit"
