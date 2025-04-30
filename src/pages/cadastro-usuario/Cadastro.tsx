@@ -7,6 +7,7 @@ import JogoService from "../../services/JogoService";
 import avatares from "./avatares/avatares";
 import logo from "../../assets/furia.png";
 import ToastAlert from "../../utils/ToastAlert";
+import Spinner from "../../components/ui/Spinner";
 
 const Cadastro = () => {
     const usuarioService = new UsuarioService();
@@ -217,7 +218,11 @@ const Cadastro = () => {
                     className="w-full mt-4 bg-black dark:bg-white text-white dark:text-black font-bold py-2 px-4 border border-black dark:border-white hover:bg-zinc-800 dark:hover:bg-zinc-800 transition-colors"
                     disabled={isLoading}
                 >
-                    {isLoading ? "Cadastrando..." : "Cadastrar"}
+                    {isLoading ? 
+                        <div className="flex items-center justify-center">
+                            <Spinner size={4} />
+                        </div>
+                     : "Cadastrar"}
                 </button>
                 <button
                     type="button"
