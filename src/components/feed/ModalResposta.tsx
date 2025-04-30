@@ -5,6 +5,7 @@ import Postagem from "../../models/Postagem";
 import Resposta from "../../models/Resposta";
 import RespostaService from "../../services/RespostaService";
 import { AuthContext } from "../../context/AuthContext";
+import ToastAlert from "../../utils/ToastAlert";
 
 
 interface ModalRespostaProps {
@@ -56,7 +57,7 @@ const ModalResposta: React.FC<ModalRespostaProps> = ({ postagem, respostas, onCl
 
     try {
       await respostaService.createResposta(resposta, header);
-      alert("Resposta enviada com sucesso!");
+      ToastAlert("Resposta enviada com sucesso!", "sucesso");
       reloadPostagem();
       setNovaResposta((prev) => ({ ...prev, conteudo: "" }));
     } catch (error) {
@@ -128,8 +129,18 @@ const ModalResposta: React.FC<ModalRespostaProps> = ({ postagem, respostas, onCl
             rows={3}
             placeholder="Escreva sua resposta..."
             value={novaResposta.conteudo}
-            onChange={(e) => setNovaResposta({ ...novaResposta, conteudo: e.target.value })} // Atualiza o estado com o valor do textarea
+            onChange={(e) => setNovaResposta({ ...novaResposta, conteudo: e.target.value })}
           />
+          {novaResposta.conteudo && (
+            <div className="flex justify-end mb-2">
+              <span className="text-sm text-zinc-500 dark:text-zinc-400">{novaResposta.conteudo.length}/280</span>
+            </div>
+          )}
+          {novaResposta.conteudo && (
+            <div className="flex justify-end mb-2">
+              <span className="text-sm text-zinc-500 dark:text-zinc-400">O Minimo de caracteres é 5 e o Máximo 280 caracteres</span>
+            </div>
+          )}
           <button
             onClick={handleSubmit}
             className="self-end bg-black hover:bg-zinc-700 text-white px-4 py-2 transition-colors"
