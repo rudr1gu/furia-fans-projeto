@@ -10,8 +10,8 @@ import UsuarioService from '../../services/UsuarioService';
 import PostagemService from '../../services/PostagemService';
 import EventoService from '../../services/EventoService';
 import Evento from '../../models/Evento';
-import { section } from 'framer-motion/client';
-
+import { useNavigate } from 'react-router-dom';
+import SplashScreen from '../../components/ui/SplashScreen';
 
 const Home = () => {
     const { usuario, handleLogout } = useContext(AuthContext);
@@ -28,24 +28,38 @@ const Home = () => {
     const [upcomingEvent, setUpcomingEvent] = useState<Evento>({} as Evento);
 
     const [fan, setFan] = useState<Usuario>({} as Usuario);
+    const [loading, setLoading] = useState<boolean>(false);
 
     const usuarioService = new UsuarioService();
     const postagemService = new PostagemService();
     const eventoService = new EventoService();
+
+    const navigate = useNavigate();
 
     const header = {
         headers: { Authorization: token },
     };
 
     useEffect(() => {
-        if (!token) {
-            handleLogout();
-            return;
+        const carregarDados = async () => {
+            if (!token) {
+                handleLogout();
+                navigate('/login');
+                return;
+            }
+            setLoading(true);
+            try {
+                await Promise.all([
+                    fetchFeaturedFans(),
+                    fetchRecentPosts(),
+                    fetchUpcomingEvents(),
+                ]);
+            } catch (error) {
+                console.error('Error loading data:', error);
+            }
+            setLoading(false);
         }
-
-        fetchFeaturedFans();
-        fetchRecentPosts();
-        fetchUpcomingEvents();
+        carregarDados();
     }, [token]);
 
     const fetchFeaturedFans = async () => {
@@ -102,6 +116,8 @@ const Home = () => {
 
     return (
         <section className="bg-gray-100 dark:bg-zinc-950 min-h-screen">
+            {loading && <SplashScreen />}
+            {!loading && (            
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
                 <section className="mb-10">
                     <div className="relative rounded-xl overflow-hidden mb-8">
@@ -113,7 +129,7 @@ const Home = () => {
                         <div className="absolute inset-0 bg-gradient-to-r from-black to-transparent flex items-end aling-items-center justify-center">
                             <div className="p-8">
                                 <button className="bg-white text-black hover:bg-gray-200 px-6 py-3 rounded-md font-bold transition-colors duration-300">
-                                Visite a nossa loja
+                                    Visite a nossa loja
                                 </button>
                             </div>
                         </div>
@@ -154,6 +170,7 @@ const Home = () => {
                     </div>
                 </section>
             </div>
+            )}
 
         </section>
     );
