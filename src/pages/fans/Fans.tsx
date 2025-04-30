@@ -6,6 +6,7 @@ import { AuthContext } from "../../context/AuthContext";
 import FansCard from "../../components/fans/FansCard";
 import JogoService from "../../services/JogoService";
 import Jogo from "../../models/Jogo";
+import SplashScreen from "../../components/ui/SplashScreen";
 
 
 
@@ -19,6 +20,7 @@ const Fans = () => {
     const [usuariosFiltrados, setUsuariosFiltrados] = useState<Usuario[]>([]);
     const [filtroNome, setFiltroNome] = useState("");
     const [filtroJogo, setFiltroJogo] = useState("");
+    const [loading, setLoading] = useState<boolean>(false);
 
 
     const [jogos, setJogos] = useState<Jogo[]>([]);
@@ -51,38 +53,46 @@ const Fans = () => {
     };
 
     useEffect(() => {
-        buscarJogos();
-    }
-        , []);
+        const carregarDados = async () => {
+            if (!token) {
+                handleLogout();
+                navigate("/login");
+                return;
+            }
 
-    useEffect(() => {
-        if (token) {
-            buscarUsuarios();
-        } else {
-            handleLogout();
-            navigate("/login");
-        }
+            setLoading(true);
+            try {
+                await Promise.all([
+                    buscarUsuarios(),
+                    buscarJogos()
+                ]);
+            } catch (err) {
+                console.error("Erro ao carregar dados:", err);
+            }
+            setLoading(false);
+        };
+        carregarDados();
     }, [token]);
 
     const filtrarPorNome = (nome: string) => {
         setFiltroNome(nome);
         aplicarFiltros(nome, filtroJogo);
     };
-    
+
     const filtrarPorJogo = (descricaoJogo: string) => {
         setFiltroJogo(descricaoJogo);
         aplicarFiltros(filtroNome, descricaoJogo);
     };
-    
+
     const aplicarFiltros = (nome: string, descricaoJogo: string) => {
         let filtrados = usuarios;
-    
+
         if (nome.trim() !== "") {
             filtrados = filtrados.filter((u) =>
                 u.nickName.toLowerCase().includes(nome.toLowerCase())
             );
         }
-    
+
         if (descricaoJogo.trim() !== "") {
             filtrados = filtrados.filter((u) =>
                 u.jogos!.some((jogo) =>
@@ -93,10 +103,11 @@ const Fans = () => {
 
         setUsuariosFiltrados(filtrados);
     }
-    
+
     return (
         <>
-            {usuarios.length > 0 ? (
+            {loading && <SplashScreen />}
+            {!loading && (
                 <div className="min-h-screen bg-zinc-100 dark:bg-zinc-950 py-10 px-4">
                     <div className="max-w-7xl mx-auto flex flex-col gap-6">
                         <div className="flex flex-col sm:flex-row gap-4">
@@ -128,15 +139,7 @@ const Fans = () => {
                         </div>
                     </div>
                 </div>
-            ) : (
-                <div className="flex justify-center items-center min-h-screen bg-zinc-100 dark:bg-zinc-950">
-                    <button
-                        onClick={buscarUsuarios}
-                        className="bg-primary hover:bg-primary-dark text-white px-6 py-3 rounded-lg shadow-md transition-all"
-                    >
-                        Buscar Usuários
-                    </button>
-                </div>
+
             )}
         </>
     );
