@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 interface NavLinkProps {
   href: string;
@@ -19,13 +20,13 @@ export const NavLink: React.FC<NavLinkProps> = ({
   const isActive = window.location.pathname === href;
   
   return (
-    <a
-      href={href}
+    <Link
+      to={href}
       className={`${className} ${isActive ? activeClassName : ''} flex items-center gap-2`}
     >
       {icon && <span>{icon}</span>}
       <span>{children}</span>
-    </a>
+    </Link>
   );
 };
 
