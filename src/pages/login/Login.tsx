@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
 import UsuarioLogin from "../../models/UsuarioLogin";
 import logoFuria from "../../assets/furia.png";
+import Spinner from "../../components/ui/Spinner";
 
 const Login = () => {
 
@@ -70,7 +71,9 @@ const Login = () => {
                     className="w-full mt-4 bg-black dark:bg-white text-white dark:text-black font-bold py-2 px-4 border border-black dark:border-white hover:bg-zinc-800 dark:hover:bg-zinc-800 transition-colors"
                     disabled={isLoading}
                 >
-                    {isLoading ? "Logando..." : "Entrar"}
+                    {isLoading ?
+                        <Spinner size={5} />
+                        : "Entrar"}
                 </button>
                 <p className="mt-4 text-sm text-center text-black dark:text-white">
                     Não tem uma conta?{" "}

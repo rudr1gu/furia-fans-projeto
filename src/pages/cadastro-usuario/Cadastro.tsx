@@ -220,7 +220,7 @@ const Cadastro = () => {
                 >
                     {isLoading ? 
                         <div className="flex items-center justify-center">
-                            <Spinner size={4} />
+                            <Spinner size={5} />
                         </div>
                      : "Cadastrar"}
                 </button>
