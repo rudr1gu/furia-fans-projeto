@@ -6,6 +6,7 @@ import Resposta from "../../models/Resposta";
 import RespostaService from "../../services/RespostaService";
 import { AuthContext } from "../../context/AuthContext";
 import ToastAlert from "../../utils/ToastAlert";
+import Spinner from "../ui/Spinner";
 
 
 interface ModalRespostaProps {
@@ -27,6 +28,8 @@ interface ModeloResposta {
 
 const ModalResposta: React.FC<ModalRespostaProps> = ({ postagem, respostas, onClose, reloadPostagem }) => {
 
+  const [sending, setSending] = useState<boolean>(false);
+
   const { usuario } = useContext(AuthContext);
 
   const token = usuario.token
@@ -43,6 +46,11 @@ const ModalResposta: React.FC<ModalRespostaProps> = ({ postagem, respostas, onCl
   const respostaService = new RespostaService();
 
   const handleSubmit = async () => {
+    if (novaResposta.conteudo.length < 5 || novaResposta.conteudo.length > 280) {
+      ToastAlert("O conteúdo da resposta deve ter entre 5 e 280 caracteres.", "erro");
+      return;
+    }
+    setSending(true);
 
     const resposta = {
       conteudo: novaResposta.conteudo,
@@ -63,6 +71,7 @@ const ModalResposta: React.FC<ModalRespostaProps> = ({ postagem, respostas, onCl
     } catch (error) {
       console.error("Erro ao enviar resposta:", error);
     }
+    setSending(false);
   };
 
   return (
@@ -143,9 +152,18 @@ const ModalResposta: React.FC<ModalRespostaProps> = ({ postagem, respostas, onCl
           )}
           <button
             onClick={handleSubmit}
-            className="self-end bg-black hover:bg-zinc-700 text-white px-4 py-2 transition-colors"
+            disabled={!novaResposta.conteudo}
+            type="button"
+            className="self-end bg-black hover:bg-zinc-700 text-white px-4 py-2 transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            Enviar Resposta
+            {sending ? (
+              <div className="flex items-center space-x-2">
+                <Spinner size={4} />
+                <span>Enviando...</span>
+              </div>
+            ) : (
+              "Enviar Resposta"
+            )}
           </button>
         </div>
       </motion.div>
