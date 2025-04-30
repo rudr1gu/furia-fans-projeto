@@ -196,7 +196,7 @@ const Cadastro = () => {
 
                 <div className="mb-6">
                     <label className="block text-sm text-black dark:text-white mb-2">Jogos Favoritos</label>
-                    <div className="flex gap-4 flex-wrap">
+                    <div className="flex gap-4 flex-wrap">                
                         {jogosDisponiveis.map(jogo => (
                             <div
                                 key={jogo.id}

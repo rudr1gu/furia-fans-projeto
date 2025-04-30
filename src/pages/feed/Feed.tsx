@@ -111,8 +111,8 @@ const Feed = () => {
 
     const ordenarPostagensPorData = (postagens: Postagem[]) => {
         return postagens.sort((a, b) => {
-            const dateA = a.dataCriacao ? new Date(a.dataCriacao).getTime() : 0;
-            const dateB = b.dataCriacao ? new Date(b.dataCriacao).getTime() : 0;
+            const dateA = a.id!;
+            const dateB = b.id!;
             return dateB - dateA;
         })
     };

@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const baseApi = axios.create({
-    baseURL: 'http://localhost:8080',
+    baseURL: 'https://api-dashboard-furia.onrender.com',
 });
 
 export default baseApi;
