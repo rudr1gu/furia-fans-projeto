@@ -1,13 +1,13 @@
 import { useContext, useState } from "react";
 import { motion } from "framer-motion";
-import { X } from "lucide-react";
+import { Trash2, X } from "lucide-react";
 import Postagem from "../../models/Postagem";
 import Resposta from "../../models/Resposta";
 import RespostaService from "../../services/RespostaService";
 import { AuthContext } from "../../context/AuthContext";
 import ToastAlert from "../../utils/ToastAlert";
 import Spinner from "../ui/Spinner";
-
+import ModalDelete from "./ModalDelete";
 
 interface ModalRespostaProps {
   postagem: Postagem;
@@ -29,6 +29,8 @@ interface ModeloResposta {
 const ModalResposta: React.FC<ModalRespostaProps> = ({ postagem, respostas, onClose, reloadPostagem }) => {
 
   const [sending, setSending] = useState<boolean>(false);
+  const [deleting, setDeleting] = useState<boolean>(false);
+  const [respostaId, setRespostaId] = useState<number>(0);
 
   const { usuario } = useContext(AuthContext);
 
@@ -62,7 +64,6 @@ const ModalResposta: React.FC<ModalRespostaProps> = ({ postagem, respostas, onCl
       },
     };
 
-
     try {
       await respostaService.createResposta(resposta, header);
       ToastAlert("Resposta enviada com sucesso!", "sucesso");
@@ -73,6 +74,21 @@ const ModalResposta: React.FC<ModalRespostaProps> = ({ postagem, respostas, onCl
     }
     setSending(false);
   };
+
+  const handleDelete = async (id: number) => {
+    try {
+      await respostaService.deleteResposta(id, header);
+      ToastAlert("Resposta deletada com sucesso!", "sucesso");
+      reloadPostagem();
+    } catch (error) {
+      console.error("Erro ao deletar resposta:", error);
+      ToastAlert("Erro ao deletar resposta!", "erro");
+    } finally {
+      setDeleting(false);
+      setRespostaId(0);
+    }
+  };
+
 
   return (
     <>
@@ -103,7 +119,7 @@ const ModalResposta: React.FC<ModalRespostaProps> = ({ postagem, respostas, onCl
           <div className="space-y-4">
             {respostas.length > 0 ? (
               respostas.map((resposta) => (
-                <div key={resposta.id} className="p-3 bg-zinc-100 dark:bg-zinc-700 rounded-md">
+                <div key={resposta.id} className="p-3 bg-zinc-100 dark:bg-zinc-700 rounded-md relative ">
                   <div className="flex items-center gap-3 mb-2">
                     <img
                       src={resposta.usuario?.avatar}
@@ -123,6 +139,17 @@ const ModalResposta: React.FC<ModalRespostaProps> = ({ postagem, respostas, onCl
                       </p>
                     </div>
                   </div>
+                  {usuario.id === resposta.usuario.id && (
+                    <button
+                      onClick={() => {
+                        setRespostaId(resposta.id!);
+                        setDeleting(true);
+                      }}
+                      className="absolute top-2 right-2 text-zinc-500 hover:text-red-500 transition-colors"
+                    >
+                      <Trash2 size={20} />
+                    </button>
+                  )}
                   <p className="text-sm text-zinc-800 dark:text-zinc-200">{resposta.conteudo}</p>
                 </div>
               ))
@@ -166,6 +193,13 @@ const ModalResposta: React.FC<ModalRespostaProps> = ({ postagem, respostas, onCl
             )}
           </button>
         </div>
+        {deleting && (
+                  <ModalDelete
+                  onClose={() => setDeleting(false)}
+                  onDelete={() => handleDelete(respostaId)}
+                />
+        )}
+
       </motion.div>
     </>
   );

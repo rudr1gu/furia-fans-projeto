@@ -13,6 +13,11 @@ class RespostaService {
         return response.data;
     }
 
+    deleteResposta = async (id: number, header: Object) => {
+        const response = await baseApi.delete(`/respostas/${id}`, header);
+        return response.data;
+    }
+
 }
 
 export default RespostaService;
