@@ -114,63 +114,82 @@ const Home = () => {
         }
     };
 
+    const fetchFan = async () => {
+        try {
+            await usuarioService.getByIdUsuario(usuario.id!, setFan, header);
+        } catch (error) {
+            console.error('Error fetching fan:', error);
+        }
+    };
+
+    useEffect(() => {
+        fetchFan();
+    }, [token]);
+
+
+
     return (
         <section className="bg-gray-100 dark:bg-zinc-950 min-h-screen">
             {loading && <SplashScreen />}
-            {!loading && (            
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-                <section className="mb-10">
-                    <div className="relative rounded-xl overflow-hidden mb-8">
-                        <img
-                            src="https://furiagg.fbitsstatic.net/img/b/1be4afd5-a727-4555-81fd-e779a32578be.jpg?w=1920&v=no-change"
-                            alt="Furia E-Sports"
-                            className="w-full h-64 md:h-96 object-cover"
-                        />
-                        <div className="absolute inset-0 bg-gradient-to-r from-black to-transparent flex items-end aling-items-center justify-center">
-                            <div className="p-8">
-                                <button className="bg-white text-black hover:bg-gray-200 px-6 py-3 rounded-md font-bold transition-colors duration-300">
-                                    Visite a nossa loja
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                        <div>
-                            <div className="space-y-4 p-4">
-                                {featuredFan.id && <FanCard fan={featuredFan} />}
-                                <div className="text-center mt-4">
-                                    <a href="/fans" className="text-black dark:text-white hover:underline font-medium">
-                                        Ver todos os fãs
-                                    </a>
+            {!loading && (
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+                    <section className="mb-10">
+                        <div className="relative rounded-xl overflow-hidden mb-8">
+                            <img
+                                src="https://furiagg.fbitsstatic.net/img/b/1be4afd5-a727-4555-81fd-e779a32578be.jpg?w=1920&v=no-change"
+                                alt="Furia E-Sports"
+                                className="w-full h-64 md:h-96 object-cover"
+                            />
+                            <div className="absolute inset-0 bg-gradient-to-r from-black to-transparent flex items-end aling-items-center justify-center">
+                                <div className="p-8">
+                                    <button className="bg-white text-black hover:bg-gray-200 px-6 py-3 rounded-md font-bold transition-colors duration-300">
+                                        Visite a nossa loja
+                                    </button>
                                 </div>
                             </div>
                         </div>
 
-                        <div>
-                            <div className="space-y-4 p-4">
-                                {recentPost.id && <PostagemCard postagem={recentPost} deletePostagem={deletePostagem} fan={fan} />}
-                                <div className="text-center mt-4">
-                                    <a href="/feed" className="text-black dark:text-white hover:underline font-medium">
-                                        Ver o Feed
-                                    </a>
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                            <div>
+                                <div className="space-y-4 p-4">
+                                    {featuredFan.id && <FanCard fan={featuredFan} />}
+                                    <div className="text-center mt-4">
+                                        <a href="/fans" className="text-black dark:text-white hover:underline font-medium">
+                                            Ver todos os fãs
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div>
+                                <div className="space-y-4 p-4">
+                                    {recentPost.id && <PostagemCard postagem={recentPost} deletePostagem={deletePostagem} fan={fan} />}
+                                    <div className="text-center mt-4">
+                                        <a href="/feed" className="text-black dark:text-white hover:underline font-medium">
+                                            Ver o Feed
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <div className="space-y-4 p-4">
+                                    {upcomingEvent.id && <EventosCard evento={upcomingEvent} />}
+                                    <div className="text-center mt-4">
+                                        <a href="/eventos" className="text-black dark:text-white hover:underline font-medium">
+                                            Ver todos os eventos
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <div>
-                            <div className="space-y-4 p-4">
-                                {upcomingEvent.id && <EventosCard evento={upcomingEvent} />}
-                                <div className="text-center mt-4">
-                                    <a href="/eventos" className="text-black dark:text-white hover:underline font-medium">
-                                        Ver todos os eventos
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-            </div>
+                    </section>
+                </div>
             )}
+            {
+                featuredFans.length > 0 && recentPosts && upcomingEvents && (
+                    <></>
+                )
+            }
 
         </section>
     );
