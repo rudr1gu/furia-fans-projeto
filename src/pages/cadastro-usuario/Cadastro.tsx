@@ -6,6 +6,7 @@ import Jogo from "../../models/Jogo";
 import JogoService from "../../services/JogoService";
 import avatares from "./avatares/avatares";
 import logo from "../../assets/furia.png";
+import ToastAlert from "../../utils/ToastAlert";
 
 const Cadastro = () => {
     const usuarioService = new UsuarioService();
@@ -70,13 +71,14 @@ const Cadastro = () => {
 
             try {
                 await usuarioService.createUsuario(usuarioParaCadastrar, setUsuario);
-                alert("Usuário cadastrado com sucesso!");
+                ToastAlert("Usuário cadastrado com sucesso!", "sucesso");
                 retornar();
             } catch (error) {
-                alert("Os dados do Usuário estão inconsistentes!");
+                console.error("Erro ao cadastrar usuário:", error);
+                ToastAlert("Erro ao cadastrar usuário!", "erro");
             }
         } else {
-            alert("As senhas não conferem ou são menores que 8 caracteres!");
+            ToastAlert("As senhas não conferem ou são menores que 8 caracteres!", "erro");
             setUsuario({ ...usuario, senha: '' });
             setConfirmarSenha('');
         }
