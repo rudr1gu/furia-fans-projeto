@@ -8,6 +8,11 @@ class JogoService {
         return response.data;
     }
 
+    getJogoById = async(id: number, header: Object): Promise<Jogo> => {
+        const response = await baseApi.get<Jogo>(`/jogos/${id}`, header);
+        return response.data;
+    }
+
 }
 
 export default JogoService;

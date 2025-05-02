@@ -4,7 +4,7 @@ import { NavLink } from '../ui/NavLink';
 import Logo from '../ui/Logo';
 import { ThemeContext } from '../../context/ThemeContext';
 import { AuthContext } from '../../context/AuthContext';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Navbar: React.FC = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -33,7 +33,9 @@ const Navbar: React.FC = () => {
                 <div className="flex items-center justify-between h-16">
                     <div className="flex items-center">
                         <div className="flex-shrink-0">
-                            <Logo size={40} />
+                            <Link to="/home" className="flex items-center">
+                                <Logo size={40} />
+                            </Link>
                         </div>
                         <div className="hidden md:block">
                             <div className="ml-10 flex items-center justify-between space-x-4">
