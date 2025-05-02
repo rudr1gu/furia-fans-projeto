@@ -185,8 +185,7 @@ const ModalResposta: React.FC<ModalRespostaProps> = ({ postagem, respostas, onCl
           >
             {sending ? (
               <div className="flex items-center space-x-2">
-                <Spinner size={4} />
-                <span>Enviando...</span>
+                <Spinner  />
               </div>
             ) : (
               "Enviar Resposta"

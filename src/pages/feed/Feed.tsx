@@ -164,7 +164,7 @@ const Feed = () => {
                                 >
                                     {posting ? (
                                         <div className="flex items-center space-x-2">
-                                            <Spinner size={4} />
+                                            <Spinner />
                                         </div>
                                     ) : (
                                         <span>Enviar</span>
