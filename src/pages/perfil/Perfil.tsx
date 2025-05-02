@@ -44,16 +44,20 @@ const Perfil = () => {
         }
     };
 
-    const buscarUsuarioById = async () => {
-        try {
-            await usuarioService.getByIdUsuario(usuario.id!, setCurrentUser, {
-                headers: { Authorization: token },
-            });
-        } catch (error) {
-            console.error("Erro ao buscar usuário:", error);
-            handleLogout();
-        }
-    };
+    const header = {
+        headers: { Authorization: token },
+    }
+
+    // const buscarUsuarioById = async () => {
+    //     try {
+    //         await usuarioService.getByIdUsuario(usuario.id!, setCurrentUser, {
+    //             headers: { Authorization: token },
+    //         });
+    //     } catch (error) {
+    //         console.error("Erro ao buscar usuário:", error);
+    //         handleLogout();
+    //     }
+    // };
 
     useEffect(() => {
         const carregarDados = async () => {
@@ -65,14 +69,29 @@ const Perfil = () => {
             setLoading(true);
             try {
                 await Promise.all([
-                    buscarUsuarioById(),
                     buscarJogos(),
+                    usuarioService.getByIdUsuario(usuario.id!, (res: Usuario) => {
+                        setCurrentUser(res);
+                        const links: any = {};
+                        res.redesSociais?.forEach((rs: any) => {
+                            links[rs.nomeRedeSocial] = {
+                                id: rs.id,
+                                url: rs.urlRedeSocial
+                            };
+                        });
+                        setSocialLinks({
+                            twitter: links.twitter?.url || '',
+                            instagram: links.instagram?.url || '',
+                            twitch: links.twitch?.url || '',
+                            website: links.website?.url || ''
+                        });
+                    }, header),
                 ]);
             } catch (error) {
                 console.error('Erro ao carregar dados:', error);
             }
             setLoading(false);
-        }
+        };
         carregarDados();
     }, [token]);
 
@@ -103,32 +122,28 @@ const Perfil = () => {
             senha: confirmarSenha,
             redesSociais: [
                 {
+                    id: currentUser.redesSociais?.find(r => r.nomeRedeSocial === 'twitter')?.id,
                     nomeRedeSocial: 'twitter',
                     urlRedeSocial: socialLinks.twitter,
-                    usuario: {
-                        id: currentUser.id,
-                    }
+                    usuario: { id: currentUser.id }
                 },
                 {
+                    id: currentUser.redesSociais?.find(r => r.nomeRedeSocial === 'instagram')?.id,
                     nomeRedeSocial: 'instagram',
                     urlRedeSocial: socialLinks.instagram,
-                    usuario: {
-                        id: currentUser.id,
-                    }
+                    usuario: { id: currentUser.id }
                 },
                 {
+                    id: currentUser.redesSociais?.find(r => r.nomeRedeSocial === 'twitch')?.id,
                     nomeRedeSocial: 'twitch',
                     urlRedeSocial: socialLinks.twitch,
-                    usuario: {
-                        id: currentUser.id,
-                    }
+                    usuario: { id: currentUser.id }
                 },
                 {
+                    id: currentUser.redesSociais?.find(r => r.nomeRedeSocial === 'website')?.id,
                     nomeRedeSocial: 'website',
                     urlRedeSocial: socialLinks.website,
-                    usuario: {
-                        id: currentUser.id,
-                    }
+                    usuario: { id: currentUser.id }
                 }
             ],
             jogos: favoriteGames,
@@ -146,6 +161,22 @@ const Perfil = () => {
             ToastAlert('Erro ao salvar alterações.', 'erro');
         }
     };
+
+    useEffect(() => {
+        const fetchFavoriteGames = async () => {
+            if (currentUser && currentUser.jogos) {
+                const jogosFavoritos = await Promise.all(
+                    currentUser.jogos.map(async (jogo) => {
+                        const jogoData = await jogoService.getJogoById(jogo.id!, header);
+                        return jogoData;
+                    })
+                );
+                setFavoriteGames(jogosFavoritos);
+            }
+        }
+        fetchFavoriteGames();
+
+    }, []);
 
     return (
         <section className="bg-gray-100 dark:bg-zinc-950 min-h-screen">
