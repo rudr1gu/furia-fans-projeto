@@ -72,7 +72,10 @@ const Login = () => {
                     disabled={isLoading}
                 >
                     {isLoading ?
-                        <Spinner /> 
+                        <div className="flex justify-center items-center min-h-min bg-gray-900 text-white">
+                            <Spinner />
+                            <span className="ml-2">Entrando ...</span>
+                        </div>
                         : "Entrar"}
                 </button>
                 <p className="mt-4 text-sm text-center text-black dark:text-white">
@@ -81,7 +84,6 @@ const Login = () => {
                         Cadastre-se
                     </Link>
                 </p>
-
             </form>
         </section>
 

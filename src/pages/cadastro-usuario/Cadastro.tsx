@@ -196,16 +196,15 @@ const Cadastro = () => {
 
                 <div className="mb-6">
                     <label className="block text-sm text-black dark:text-white mb-2">Jogos Favoritos</label>
-                    <div className="flex gap-4 flex-wrap">                
+                    <div className="flex gap-4 flex-wrap">
                         {jogosDisponiveis.map(jogo => (
                             <div
                                 key={jogo.id}
                                 onClick={() => handleSelecionarJogo(jogo)}
-                                className={`w-16 h-16 rounded-full border-2 flex items-center justify-center cursor-pointer ${
-                                    jogosSelecionados.includes(jogo)
+                                className={`w-16 h-16 rounded-full border-2 flex items-center justify-center cursor-pointer ${jogosSelecionados.includes(jogo)
                                         ? "border-amber-600"
                                         : "border-black dark:border-white"
-                                }`}
+                                    }`}
                             >
                                 <img src={jogo.imagemUrl} alt={jogo.nome} className="w-14 h-14 rounded-full object-cover" />
                             </div>
@@ -218,11 +217,12 @@ const Cadastro = () => {
                     className="w-full mt-4 bg-black dark:bg-white text-white dark:text-black font-bold py-2 px-4 border border-black dark:border-white hover:bg-zinc-800 dark:hover:bg-zinc-800 transition-colors"
                     disabled={isLoading}
                 >
-                    {isLoading ? 
-                        <div className="flex items-center justify-center">
+                    {isLoading ?
+                        <div className="flex justify-center items-center min-h-min bg-gray-900 text-white">
                             <Spinner />
+                            <span className="ml-2">Cadastrando ...</span>
                         </div>
-                     : "Cadastrar"}
+                        : "Cadastrar"}
                 </button>
                 <button
                     type="button"
@@ -230,7 +230,7 @@ const Cadastro = () => {
                     className="w-full mt-4 bg-transparent text-black dark:text-white font-bold py-2 px-4 border border-black dark:border-white hover:bg-zinc-300 dark:hover:bg-zinc-700 transition-colors"
                 >
                     Voltar
-                    
+
                 </button>
             </form>
         </section>
