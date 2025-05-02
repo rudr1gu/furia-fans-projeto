@@ -8,11 +8,14 @@ import avatares from "./avatares/avatares";
 import logo from "../../assets/furia.png";
 import ToastAlert from "../../utils/ToastAlert";
 import Spinner from "../../components/ui/Spinner";
+import SplashScreen from "../../components/ui/SplashScreen";
 
 const Cadastro = () => {
     const usuarioService = new UsuarioService();
     const jogoService = new JogoService();
     const navigate = useNavigate();
+
+    const [loading, setLoading] = useState<boolean>(false);
 
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [confirmarSenha, setConfirmarSenha] = useState<string>("");
@@ -96,12 +99,25 @@ const Cadastro = () => {
                 console.error("Erro ao buscar jogos:", error);
             }
         };
-
         buscarJogos();
+
+        const carregarDados = async () => {
+            setLoading(true);
+            try {
+                await buscarJogos();
+            } catch (err) {
+                console.error("Erro ao carregar dados:", err);
+            }
+            setLoading(false);
+        };
+        carregarDados();
     }, []);
 
     return (
         <section className="min-h-screen flex flex-col justify-center items-center bg-zinc-200 dark:bg-zinc-900 transition-colors">
+            {loading && <SplashScreen />}
+
+            {!loading && (
             <form onSubmit={cadastrar} className="w-full max-w-md p-8 rounded-lg shadow-lg bg-white dark:bg-zinc-950 transition-colors">
                 <div className="flex justify-center mb-1">
                     <img src={logo} alt="Logo" className="w-20 h-20" />
@@ -233,6 +249,7 @@ const Cadastro = () => {
 
                 </button>
             </form>
+            )}
         </section>
     );
 };
