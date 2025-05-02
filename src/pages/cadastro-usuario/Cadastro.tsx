@@ -220,7 +220,7 @@ const Cadastro = () => {
                 >
                     {isLoading ? 
                         <div className="flex items-center justify-center">
-                            <Spinner size={5} />
+                            <Spinner />
                         </div>
                      : "Cadastrar"}
                 </button>
@@ -230,6 +230,7 @@ const Cadastro = () => {
                     className="w-full mt-4 bg-transparent text-black dark:text-white font-bold py-2 px-4 border border-black dark:border-white hover:bg-zinc-300 dark:hover:bg-zinc-700 transition-colors"
                 >
                     Voltar
+                    
                 </button>
             </form>
         </section>

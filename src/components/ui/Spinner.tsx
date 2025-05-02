@@ -1,10 +1,8 @@
-// components/ui/Spinner.tsx
-const Spinner = ({ size = 4 }: { size?: number }) => {
+const Spinner = () => {
     return (
-        <div
-            className={`border-${size} border-white border-t-transparent rounded-full animate-spin h-${size} w-${size}`}
-            role="status"
-        />
+        <span className="relative w-6 h-6 rounded-full border-4 border-black border-t-transparent border-r-transparent animate-spin">
+            <span className="absolute inset-0 m-auto w-6 h-6 rounded-full border-4 border-white border-t-transparent animate-spin-reverse" />
+        </span>
     );
 }
 

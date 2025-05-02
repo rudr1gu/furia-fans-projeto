@@ -72,7 +72,7 @@ const Login = () => {
                     disabled={isLoading}
                 >
                     {isLoading ?
-                        <Spinner size={5} />
+                        <Spinner /> 
                         : "Entrar"}
                 </button>
                 <p className="mt-4 text-sm text-center text-black dark:text-white">

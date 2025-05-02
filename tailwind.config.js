@@ -17,9 +17,18 @@ export default {
             transform: 'translateY(0) scale(1)',
           },
         },
+        'spin-reverse': {
+          '0%': {
+            transform: 'rotate(0deg)',
+          },
+          '100%': {
+            transform: 'rotate(-360deg)',
+          },
+        },
       },
       animation: {
         'fade-in-up': 'fade-in-up 0.3s ease-out forwards',
+        'spin-reverse': 'spin-reverse 1s linear infinite',
       },
     }
   },

@@ -1,17 +1,6 @@
-import { useEffect, useState } from "react";
 import logo from "../../assets/furia.png"
 
 const SplashScreen = () => {
-  const [visible, setVisible] = useState(true);
-
-  useEffect(() => {
-    const timeout = setTimeout(() => {
-      setVisible(false);
-    }, 4000);
-    return () => clearTimeout(timeout);
-  }, []);
-
-  if (!visible) return null;
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black text-white">
