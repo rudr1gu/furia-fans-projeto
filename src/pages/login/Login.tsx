@@ -72,7 +72,7 @@ const Login = () => {
                     disabled={isLoading}
                 >
                     {isLoading ?
-                        <div className="flex justify-center items-center min-h-min bg-gray-900 text-white">
+                        <div className="flex justify-center items-center min-h-min">
                             <Spinner />
                             <span className="ml-2">Entrando ...</span>
                         </div>

@@ -15,7 +15,7 @@ import SplashScreen from '../../components/ui/SplashScreen';
 
 const Home = () => {
     const { usuario, handleLogout } = useContext(AuthContext);
-    const token = usuario?.token;
+    const token = usuario.token;
 
     const [featuredFans, setFeaturedFans] = useState<Usuario[]>([]);
 
@@ -126,6 +126,10 @@ const Home = () => {
         fetchFan();
     }, [token]);
 
+    const navigateToStore = () => {
+        window.open('https://www.furia.gg', '_blank');
+    }
+
 
 
     return (
@@ -142,7 +146,9 @@ const Home = () => {
                             />
                             <div className="absolute inset-0 bg-gradient-to-r from-black to-transparent flex items-end aling-items-center justify-center">
                                 <div className="p-8">
-                                    <button className="bg-white text-black hover:bg-gray-200 px-6 py-3 rounded-md font-bold transition-colors duration-300">
+                                    <button
+                                        onClick={navigateToStore}
+                                        className="bg-white text-black hover:bg-gray-200 px-6 py-3 rounded-md font-bold transition-colors duration-300">
                                         Visite a nossa loja
                                     </button>
                                 </div>
