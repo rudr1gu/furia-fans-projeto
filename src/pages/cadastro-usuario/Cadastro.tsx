@@ -113,6 +113,19 @@ const Cadastro = () => {
         carregarDados();
     }, []);
 
+  const disabledButtonSubmit = () => {
+    if (usuario.nickName.length < 5 || usuario.email.length === 0 || usuario.senha.length < 8) {
+        return true;
+    }
+    if (confirmarSenha.length === 0 || confirmarSenha !== usuario.senha) {
+        return true;
+    }
+    if (jogosSelecionados.length === 0) {
+        return true;
+    }
+    return false;
+    }
+
     return (
         <section className="min-h-screen flex flex-col justify-center items-center bg-zinc-200 dark:bg-zinc-900 transition-colors">
             {loading && <SplashScreen />}
@@ -134,8 +147,15 @@ const Cadastro = () => {
                         className="w-full px-3 py-2 border border-black dark:border-white bg-transparent text-black dark:text-white focus:outline-none"
                         value={usuario.nickName}
                         onChange={atualizarEstado}
+                        minLength={5}
+                        maxLength={20}
                         required
                     />
+                    {
+                        usuario.nickName.length > 0 && usuario.nickName.length < 5 && (
+                            <p className="text-sm text-red-500">O Nickname deve ter pelo menos 5 caracteres!</p>
+                        )
+                    }
                 </div>
 
                 <div className="mb-4">
@@ -230,8 +250,8 @@ const Cadastro = () => {
 
                 <button
                     type="submit"
-                    className="w-full mt-4 bg-black dark:bg-white text-white dark:text-black font-bold py-2 px-4 border border-black dark:border-white hover:bg-zinc-800 dark:hover:bg-zinc-800 transition-colors"
-                    disabled={isLoading}
+                    className="w-full mt-4 bg-black dark:bg-white text-white dark:text-black font-bold py-2 px-4 border border-black dark:border-white hover:bg-zinc-800 dark:hover:bg-zinc-800 transition-colors duration-300 disabled:opacity-55"
+                    disabled={disabledButtonSubmit()}
                 >
                     {isLoading ?
                         <div className="flex justify-center items-center min-h-min bg-gray-900 text-white">
