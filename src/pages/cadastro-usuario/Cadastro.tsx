@@ -131,20 +131,20 @@ const Cadastro = () => {
             {loading && <SplashScreen />}
 
             {!loading && (
-            <form onSubmit={cadastrar} className="w-full max-w-md p-8 rounded-lg shadow-lg bg-white dark:bg-zinc-950 transition-colors">
+            <form onSubmit={cadastrar} className="form-container">
                 <div className="flex justify-center mb-1">
                     <img src={logo} alt="Logo" className="w-20 h-20" />
                 </div>
-                <h2 className="text-3xl font-bold mb-6 text-center text-black dark:text-white">Cadastre-se</h2>
+                <h2 className="form-title">Cadastre-se</h2>
 
                 <div className="mb-4">
-                    <label className="block text-sm text-black dark:text-white mb-1">NickName</label>
+                    <label className="form-label">NickName</label>
                     <input
                         id="nickName"
                         type="text"
                         name="nickName"
                         placeholder="Nickname"
-                        className="w-full px-3 py-2 border border-black dark:border-white bg-transparent text-black dark:text-white focus:outline-none"
+                        className="form-input"
                         value={usuario.nickName}
                         onChange={atualizarEstado}
                         minLength={5}
@@ -159,13 +159,13 @@ const Cadastro = () => {
                 </div>
 
                 <div className="mb-4">
-                    <label className="block text-sm text-black dark:text-white mb-1">Email</label>
+                    <label className="form-label">Email</label>
                     <input
                         id="email"
                         type="email"
                         name="email"
                         placeholder="seunome@email.com"
-                        className="w-full px-3 py-2 border border-black dark:border-white bg-transparent text-black dark:text-white focus:outline-none"
+                        className="form-input"
                         value={usuario.email}
                         onChange={atualizarEstado}
                         required
@@ -178,13 +178,13 @@ const Cadastro = () => {
                 </div>
 
                 <div className="mb-4">
-                    <label className="block text-sm text-black dark:text-white mb-1">Senha</label>
+                    <label className="form-label">Senha</label>
                     <input
                         id="senha"
                         type="password"
                         name="senha"
                         placeholder="*********"
-                        className="w-full px-3 py-2 border border-black dark:border-white bg-transparent text-black dark:text-white focus:outline-none"
+                        className="form-input"
                         value={usuario.senha}
                         onChange={atualizarEstado}
                         required
@@ -202,13 +202,13 @@ const Cadastro = () => {
                 </div>
 
                 <div className="mb-4">
-                    <label className="block text-sm text-black dark:text-white mb-1">Confirmar Senha</label>
+                    <label className="form-label">Confirmar Senha</label>
                     <input
                         id="confirmarSenha"
                         type="password"
                         name="confirmarSenha"
                         placeholder="*********"
-                        className="w-full px-3 py-2 border border-black dark:border-white bg-transparent text-black dark:text-white focus:outline-none"
+                        className="form-input"
                         value={confirmarSenha}
                         onChange={handleConfirmarSenha}
                         required
@@ -216,7 +216,7 @@ const Cadastro = () => {
                 </div>
 
                 <div className="mb-6">
-                    <label className="block text-sm text-black dark:text-white mb-2">Escolha seu Avatar</label>
+                    <label className="form-label">Escolha seu Avatar</label>
                     <div className="flex gap-4 flex-wrap">
                         {avatares.map((avatar) => (
                             <img
@@ -231,7 +231,7 @@ const Cadastro = () => {
                 </div>
 
                 <div className="mb-6">
-                    <label className="block text-sm text-black dark:text-white mb-2">Jogos Favoritos</label>
+                    <label className="form-label">Jogos Favoritos</label>
                     <div className="flex gap-4 flex-wrap">
                         {jogosDisponiveis.map(jogo => (
                             <div
@@ -250,7 +250,7 @@ const Cadastro = () => {
 
                 <button
                     type="submit"
-                    className="w-full mt-4 bg-black dark:bg-white text-white dark:text-black font-bold py-2 px-4 border border-black dark:border-white hover:bg-zinc-800 dark:hover:bg-zinc-800 transition-colors duration-300 disabled:opacity-55"
+                    className="form-button"
                     disabled={disabledButtonSubmit()}
                 >
                     {isLoading ?
@@ -263,7 +263,7 @@ const Cadastro = () => {
                 <button
                     type="button"
                     onClick={retornar}
-                    className="w-full mt-4 bg-transparent text-black dark:text-white font-bold py-2 px-4 border border-black dark:border-white hover:bg-zinc-300 dark:hover:bg-zinc-700 transition-colors"
+                    className="form-button-secondary"
                 >
                     Voltar
 

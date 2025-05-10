@@ -5,3 +5,27 @@
 *{
     font-family: "Helvetica World", Arial, Helvetica, sans-serif;
 }
+
+.form-container {
+    @apply w-full max-w-md p-8 rounded-lg shadow-lg bg-white dark:bg-zinc-950 transition-colors;
+}
+
+.form-title {
+    @apply text-3xl font-bold mb-6 text-center text-black dark:text-white;
+}
+
+.form-label {
+    @apply block text-sm text-black dark:text-white mb-1;
+}
+
+.form-input {
+    @apply w-full px-3 py-2 border border-black dark:border-white bg-transparent text-black dark:text-white focus:outline-none;
+}
+
+.form-button {
+    @apply w-full mt-4 bg-black dark:bg-white text-white dark:text-black font-bold py-2 px-4 border border-black dark:border-white hover:bg-zinc-800 dark:hover:bg-zinc-800 transition-colors duration-300 disabled:opacity-55;
+}
+
+.form-button-secondary {
+    @apply w-full mt-4 bg-transparent text-black dark:text-white font-bold py-2 px-4 border border-black dark:border-white hover:bg-zinc-300 dark:hover:bg-zinc-700 transition-colors duration-300 disabled:opacity-55;
+}
